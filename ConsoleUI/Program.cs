@@ -27,6 +27,11 @@ namespace ConsoleUI
             Console.WriteLine("Get By Id Methodu");
             Console.WriteLine(carManager.GetById(1).Description);
 
+            Console.WriteLine("OR");
+            Car car3 = carManager.GetById(1);
+
+            Console.WriteLine(car3.Description);
+
 
             Console.WriteLine("Add Methodu Sonrası GetAll");
             Car car1 = new Car() {Id=6,BrandId=2,ColorId=3,DailyPrice=650,ModelYear=1999,Description="Aile Arabası" };
