@@ -22,6 +22,18 @@ namespace ConsoleUI
             {
                 Console.WriteLine(car.CarName);
             }
+
+            Car car7 = new Car() {Id= 7,BrandId=2,ColorId=1,CarName="Araba7",DailyPrice=5500,ModelYear=2021,Description="Offroad arabası" };
+
+            carManager.Add(car7);
+
+
+            foreach (var car in carManager.GetAll())
+            {
+                Console.WriteLine(car.CarName);
+            }
+
+
         }
     }
 }
