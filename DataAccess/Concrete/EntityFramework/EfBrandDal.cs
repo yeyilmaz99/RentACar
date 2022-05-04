@@ -34,12 +34,20 @@ namespace DataAccess.Concrete.EntityFramework
 
         public Brand Get(Expression<Func<Brand, bool>> filter)
         {
-            throw new NotImplementedException();
+            using (MyDatabaseContext context = new MyDatabaseContext())
+            {
+                return context.Set<Brand>().SingleOrDefault(filter);
+            }
         }
 
         public List<Brand> GetAll(Expression<Func<Brand, bool>> filter = null)
         {
-            throw new NotImplementedException();
+            using (MyDatabaseContext context = new MyDatabaseContext())
+            {
+                return filter == null
+                        ? context.Set<Brand>().ToList()
+                        : context.Set<Brand>().Where(filter).ToList();
+            }
         }
 
         public void Update(Brand entity)
