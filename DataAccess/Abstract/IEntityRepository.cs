@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Abstract
 {
+    // class : referans tip
     public interface IEntityRepository<T> where T : class,IEntity, new()
     {
         List<T> GetAll(Expression<Func<T, bool>> filter =null);
