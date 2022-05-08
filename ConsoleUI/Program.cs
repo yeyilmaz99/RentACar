@@ -52,6 +52,14 @@ namespace ConsoleUI
                 Console.WriteLine(car.CarName);
             }
 
+            Console.WriteLine("GetCarDetails");
+
+            foreach (var car in carManager.GetCarDetails())
+            {
+                Console.WriteLine(car.CarName + " / " + car.BrandName, " / " + car.ColorName + " / " + car.DailyPrice );
+            }
+
+
         }
 
         private static void BrandTest()
