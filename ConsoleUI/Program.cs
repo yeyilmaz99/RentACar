@@ -13,13 +13,19 @@ namespace ConsoleUI
             //ColorTest();
             //BrandTest();
 
+            //CarTest();
+
+        }
+
+        private static void CarTest()
+        {
             CarManager carManager = new CarManager(new EfCarDal());
             Console.WriteLine("Base Status");
             foreach (var car in carManager.GetAll())
             {
                 Console.WriteLine(car.Id + " / " + car.CarName);
             }
-            Car car7 = new Car() { Id = 7, BrandId = 2, ColorId=3,CarName ="car7",Description="Family car",ModelYear=2020,DailyPrice = 1500  };
+            Car car7 = new Car() { Id = 7, BrandId = 2, ColorId = 3, CarName = "car7", Description = "Family car", ModelYear = 2020, DailyPrice = 1500 };
             Car car8 = new Car() { Id = 8, BrandId = 2, ColorId = 3, CarName = "car8", Description = "Race Car", ModelYear = 2020, DailyPrice = 2500 };
 
             Console.WriteLine("After Adding");
@@ -56,10 +62,8 @@ namespace ConsoleUI
 
             foreach (var car in carManager.GetCarDetails())
             {
-                Console.WriteLine(car.CarName + " / " + car.BrandName, " / " + car.ColorName + " / " + car.DailyPrice );
+                Console.WriteLine(car.CarName + " / " + car.BrandName, " / " + car.ColorName + " / " + car.DailyPrice);
             }
-
-
         }
 
         private static void BrandTest()
