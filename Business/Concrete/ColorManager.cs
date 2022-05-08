@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Business.Concrete
 {
-    internal class ColorManager : IColorService
+    public class ColorManager : IColorService
     {
         IColorDal _colorDal;
 
