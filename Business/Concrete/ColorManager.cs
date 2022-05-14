@@ -28,6 +28,7 @@ namespace Business.Concrete
                 return new ErrorResult(Messages.ProductNameInvalid);
             }
             _colorDal.Add(color);
+            return new SuccessResult(Messages.ProductAdded);
         }
 
         public void Delete(Color color)
