@@ -12,6 +12,7 @@ namespace Business.Constants
         public static string ProductNameInvalid = "Ürün Eklendi";
         public static string MaintenanceTime = "Ürün Eklendi";
         public static string ProductsListed = "Ürün Eklendi";
-
+        public static string ProductDeleted = "Ürün Silindi";
+        public static string ProductUpdated = "Ürün Güncellendi";
     }
 }
