@@ -20,79 +20,180 @@ namespace ConsoleUI
         {
             CarManager carManager = new CarManager(new EfCarDal());
             Console.WriteLine("Base Status");
-            foreach (var car in carManager.GetAll())
+
+            var result = carManager.GetAll();
+
+            if(result.Success == true)
             {
-                Console.WriteLine(car.Id + " / " + car.CarName);
+                foreach (var car in result.Data)
+                {
+                    Console.WriteLine(car.CarName);
+                }
             }
+            else
+            {
+                Console.WriteLine(result.Message);
+            }
+
             Car car7 = new Car() { Id = 7, BrandId = 2, ColorId = 3, CarName = "car7", Description = "Family car", ModelYear = 2020, DailyPrice = 1500 };
             Car car8 = new Car() { Id = 8, BrandId = 2, ColorId = 3, CarName = "car8", Description = "Race Car", ModelYear = 2020, DailyPrice = 2500 };
 
             Console.WriteLine("After Adding");
-            //carManager.Add(car7);
-            //carManager.Add(car8);
-            foreach (var car in carManager.GetAll())
+            carManager.Add(car7);
+            carManager.Add(car8);
+
+            if (result.Success == true)
             {
-                Console.WriteLine(car.Id + " / " + car.CarName);
+                foreach (var car in result.Data)
+                {
+                    Console.WriteLine(car.CarName);
+                }
+            }
+            else
+            {
+                Console.WriteLine(result.Message);
             }
             Console.WriteLine("After Deleting");
             //carManager.Delete(car7);
-            foreach (var car in carManager.GetAll())
+
+            if (result.Success == true)
             {
-                Console.WriteLine(car.Id + " / " + car.CarName);
+                foreach (var car in result.Data)
+                {
+                    Console.WriteLine(car.CarName);
+                }
             }
+            else
+            {
+                Console.WriteLine(result.Message);
+            }
+
+
             Console.WriteLine("After Updating");
-            //carManager.Update(new Car() { Id = 8, BrandId = 2, ColorId = 3, CarName = "car8edited", Description = "Trip Car", ModelYear = 2020, DailyPrice = 2500 });
-            foreach (var car in carManager.GetAll())
+            carManager.Update(new Car() { Id = 8, BrandId = 2, ColorId = 3, CarName = "car8edited", Description = "Trip Car", ModelYear = 2020, DailyPrice = 2500 });
+            if (result.Success == true)
             {
-                Console.WriteLine(car.Id + " / " + car.CarName);
+                foreach (var car in result.Data)
+                {
+                    Console.WriteLine(car.CarName);
+                }
             }
+            else
+            {
+                Console.WriteLine(result.Message);
+            }
+
+
             Console.WriteLine("GetCarsByBrandId");
-            foreach (var car in carManager.GetCarsByBrandId(2))
+            var result2 = carManager.GetCarsByBrandId(2);
+
+            if(result2.Success == true)
             {
-                Console.WriteLine(car.CarName);
+                foreach (var car in result2.Data)
+                {
+                    Console.WriteLine(car.CarName);
+                }
             }
-            Console.WriteLine("GetCarsByColorId");
-            foreach (var car in carManager.GetCarsByColorId(2))
+            else
             {
-                Console.WriteLine(car.CarName);
+                Console.WriteLine(result.Message);
+            }
+
+            Console.WriteLine("GetCarsByColorId");
+
+            var result3 = carManager.GetCarsByColorId(2);
+
+            if (result3.Success == true)
+            {
+                foreach (var car in result3.Data)
+                {
+                    Console.WriteLine(car.CarName);
+                }
+            }
+            else
+            {
+                Console.WriteLine(result.Message);
             }
 
             Console.WriteLine("GetCarDetails");
 
-            foreach (var car in carManager.GetCarDetails())
+            var result4 = carManager.GetCarDetails();
+
+            if (result4.Success == true)
             {
-                Console.WriteLine(car.CarName + " / " + car.BrandName, " / " + car.ColorName + " / " + car.DailyPrice);
+                foreach (var car in result4.Data)
+                {
+                    Console.WriteLine(car.CarName + " / " + car.BrandName + " / " + car.ColorName + " / " + car.DailyPrice);
+                }
             }
+            else
+            {
+                Console.WriteLine(result.Message);
+            }
+
         }
 
         private static void BrandTest()
         {
             BrandManager brandManager = new BrandManager(new EfBrandDal());
             Console.WriteLine("Base Status");
-            foreach (var brand in brandManager.GetAll())
+            var result = brandManager.GetAll();
+
+            if (result.Success == true)
             {
-                Console.WriteLine(brand.BrandId + " / " + brand.BrandName);
+                foreach (var brand in result.Data)
+                {
+                    Console.WriteLine(brand.BrandName);
+                }
+            }
+            else
+            {
+                Console.WriteLine(result.Message);
             }
             Brand brand4 = new Brand() { BrandId = 4, BrandName = "Fiat" };
             Brand brand5 = new Brand() { BrandId = 5, BrandName = "Citroen" };
             Console.WriteLine("After Adding");
             brandManager.Add(brand4);
             brandManager.Add(brand5);
-            foreach (var brand in brandManager.GetAll())
+
+            if (result.Success == true)
             {
-                Console.WriteLine(brand.BrandId + " / " + brand.BrandName);
+                foreach (var brand in result.Data)
+                {
+                    Console.WriteLine(brand.BrandName);
+                }
+            }
+            else
+            {
+                Console.WriteLine(result.Message);
             }
             Console.WriteLine("After Deleting");
             brandManager.Delete(brand4);
-            foreach (var brand in brandManager.GetAll())
+
+            if (result.Success == true)
             {
-                Console.WriteLine(brand.BrandId + " / " + brand.BrandName);
+                foreach (var brand in result.Data)
+                {
+                    Console.WriteLine(brand.BrandName);
+                }
             }
+            else
+            {
+                Console.WriteLine(result.Message);
+            }
+
             Console.WriteLine("After Updating");
             brandManager.Update(new Brand() { BrandId = 5, BrandName = "Peugeout" });
-            foreach (var brand in brandManager.GetAll())
+            if (result.Success == true)
             {
-                Console.WriteLine(brand.BrandId + " / " + brand.BrandName);
+                foreach (var brand in result.Data)
+                {
+                    Console.WriteLine(brand.BrandName);
+                }
+            }
+            else
+            {
+                Console.WriteLine(result.Message);
             }
         }
 
@@ -101,30 +202,67 @@ namespace ConsoleUI
             ColorManager colorManager = new ColorManager(new EfColorDal());
 
             Console.WriteLine("Base status");
-            foreach (var color in colorManager.GetAll())
+
+            var result = colorManager.GetAll();
+
+            if (result.Success == true)
             {
-                Console.WriteLine(color.ColorName);
+                foreach (var color in result.Data)
+                {
+                    Console.WriteLine(color.ColorName);
+                }
             }
+            else
+            {
+                Console.WriteLine(result.Message);
+            }
+
             Console.WriteLine("After Adding");
             Color color4 = new Color() { ColorId = 4, ColorName = "acikmavi" };
             Color color5 = new Color() { ColorId = 5, ColorName = "acikyesil" };
             colorManager.Add(color4);
             colorManager.Add(color5);
-            foreach (var color in colorManager.GetAll())
+
+            if (result.Success == true)
             {
-                Console.WriteLine(color.ColorId + color.ColorName);
+                foreach (var color in result.Data)
+                {
+                    Console.WriteLine(color.ColorName);
+                }
             }
+            else
+            {
+                Console.WriteLine(result.Message);
+            }
+
             Console.WriteLine("After Deleting");
             colorManager.Delete(color4);
-            foreach (var color in colorManager.GetAll())
+
+            if (result.Success == true)
             {
-                Console.WriteLine(color.ColorId + color.ColorName);
+                foreach (var color in result.Data)
+                {
+                    Console.WriteLine(color.ColorName);
+                }
             }
+            else
+            {
+                Console.WriteLine(result.Message);
+            }
+
             Console.WriteLine("After Updating");
             colorManager.Update(new Color() { ColorId = 5, ColorName = "aciksari" });
-            foreach (var color in colorManager.GetAll())
+
+            if (result.Success == true)
             {
-                Console.WriteLine(color.ColorId + color.ColorName);
+                foreach (var color in result.Data)
+                {
+                    Console.WriteLine(color.ColorName);
+                }
+            }
+            else
+            {
+                Console.WriteLine(result.Message);
             }
         }
 
