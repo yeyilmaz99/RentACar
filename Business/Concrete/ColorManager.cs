@@ -25,30 +25,44 @@ namespace Business.Concrete
         {
             if (color.ColorName.Length < 2)
             {
-                return new ErrorResult(Messages.ProductNameInvalid);
+                return new ErrorResult(ColorMessages.NameInvalid);
             }
             _colorDal.Add(color);
-            return new SuccessResult(Messages.ProductAdded);
+            return new SuccessResult(ColorMessages.ColorAdded);
         }
 
-        public void Delete(Color color)
+        public IResult Delete(Color color)
         {
+            if (DateTime.Now.Hour == 22)
+            {
+                return new ErrorResult(ColorMessages.MaintenanceTime);
+            }
+
             _colorDal.Delete(color);
+            return new SuccessResult(ColorMessages.ColorDeleted);
         }
 
-        public List<Color> GetAll()
+        public IDataResult<List<Color>> GetAll()
         {
-            return _colorDal.GetAll();
+
+            return new SuccessDataResult<List<Color>>(_colorDal.GetAll());
         }
 
-        public Color GetById(int id)
+        public IDataResult<Color> GetById(int id)
         {
-            return _colorDal.Get(c => c.ColorId == id);
+            return new SuccessDataResult<Color>(_colorDal.Get(c => c.ColorId == id));
         }
 
-        public void Update(Color color)
+        public IResult Update(Color color)
         {
+
+            if (DateTime.Now.Hour == 22)
+            {
+                return new ErrorResult(ColorMessages.MaintenanceTime);
+            }
+
             _colorDal.Update(color);
+            return new SuccessResult(ColorMessages.ColorUpdated);
         }
     }
 }
