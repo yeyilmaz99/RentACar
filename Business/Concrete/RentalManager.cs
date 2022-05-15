@@ -27,7 +27,7 @@ namespace Business.Concrete
             if (result == null)
             {
                 _rentalDal.Add(rental);
-                Console.WriteLine("eklendi");
+                Console.WriteLine("Eklendi");
                 return new SuccessResult();
 
             }
@@ -38,7 +38,7 @@ namespace Business.Concrete
             }
             else
             {
-                Console.WriteLine("3.de eklendi");
+                Console.WriteLine("3.de Eklendi");
                 _rentalDal.Add(rental);
                 return new SuccessResult();
             }
