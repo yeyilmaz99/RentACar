@@ -28,11 +28,11 @@ namespace Business.Concrete
             if (car.CarName.Length > 2 && car.DailyPrice > 0)
             {
                 _carDal.Add(car);
-                return new SuccessResult(CarMessages.CarAdded);
+                return new SuccessResult(Messages.Added);
             }
             else
             {
-                return new ErrorResult(CarMessages.NameInvalid);
+                return new ErrorResult(Messages.NotAdded);
             }
 
         }
@@ -41,13 +41,13 @@ namespace Business.Concrete
         {
             if (DateTime.Now.Hour == 22)
             {
-                return new ErrorResult(CarMessages.MaintenanceTime);
+                return new ErrorResult(Messages.NotDeleted);
             }
 
             
 
             _carDal.Delete(car);
-            return new SuccessResult(CarMessages.CarDeleted);
+            return new SuccessResult(Messages.Deleted);
 
         }
 
@@ -80,11 +80,11 @@ namespace Business.Concrete
         {
             if (DateTime.Now.Hour == 22)
             {
-                return new ErrorResult(CarMessages.MaintenanceTime);
+                return new ErrorResult(Messages.NotUpdated);
             }
 
             _carDal.Update(car);
-            return new SuccessResult(CarMessages.CarUpdated);
+            return new SuccessResult(Messages.Updated);
         }
     }
 }

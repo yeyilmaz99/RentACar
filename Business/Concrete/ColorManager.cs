@@ -25,21 +25,21 @@ namespace Business.Concrete
         {
             if (color.ColorName.Length < 2)
             {
-                return new ErrorResult(ColorMessages.NameInvalid);
+                return new ErrorResult(Messages.NotAdded);
             }
             _colorDal.Add(color);
-            return new SuccessResult(ColorMessages.ColorAdded);
+            return new SuccessResult(Messages.Added);
         }
 
         public IResult Delete(Color color)
         {
             if (DateTime.Now.Hour == 22)
             {
-                return new ErrorResult(ColorMessages.MaintenanceTime);
+                return new ErrorResult(Messages.NotDeleted);
             }
 
             _colorDal.Delete(color);
-            return new SuccessResult(ColorMessages.ColorDeleted);
+            return new SuccessResult(Messages.Deleted);
         }
 
         public IDataResult<List<Color>> GetAll()
@@ -58,11 +58,11 @@ namespace Business.Concrete
 
             if (DateTime.Now.Hour == 22)
             {
-                return new ErrorResult(ColorMessages.MaintenanceTime);
+                return new ErrorResult(Messages.NotUpdated);
             }
 
             _colorDal.Update(color);
-            return new SuccessResult(ColorMessages.ColorUpdated);
+            return new SuccessResult(Messages.Updated);
         }
     }
 }

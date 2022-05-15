@@ -26,26 +26,26 @@ namespace Business.Concrete
 
             if (brand.BrandName.Length < 2)
             {
-                return new ErrorResult(BrandMessages.NameInvalid);
+                return new ErrorResult(Messages.NotAdded);
             }
 
             _brandDal.Add(brand);
-            return new SuccessResult(BrandMessages.BrandAdded);
+            return new SuccessResult(Messages.Added);
         }
 
         public IResult Delete(Brand brand)
         {
             if(DateTime.Now.Hour == 22)
             {
-                return new ErrorResult(BrandMessages.MaintenanceTime);
+                return new ErrorResult(Messages.NotDeleted);
             }
             _brandDal.Delete(brand);
-            return new SuccessResult(BrandMessages.BrandDeleted);
+            return new SuccessResult(Messages.Deleted);
         }
 
         public IDataResult<List<Brand>> GetAll()
         {
-            return new SuccessDataResult<List<Brand>>(_brandDal.GetAll(),BrandMessages.BrandsListed);
+            return new SuccessDataResult<List<Brand>>(_brandDal.GetAll(),Messages.Listed);
         }
 
         public IDataResult<Brand> GetById(int id)
@@ -57,10 +57,10 @@ namespace Business.Concrete
         {
             if (DateTime.Now.Hour == 22)
             {
-                return new ErrorResult(BrandMessages.MaintenanceTime);
+                return new ErrorResult(Messages.NotUpdated);
             }
             _brandDal.Update(brand);
-            return new SuccessResult(BrandMessages.BrandUpdated);
+            return new SuccessResult(Messages.Updated);
         }
     }
 }
