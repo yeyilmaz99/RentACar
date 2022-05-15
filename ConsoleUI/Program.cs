@@ -10,12 +10,23 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("************ColorTest*************");
-            ColorTest();
-            Console.WriteLine("*************BrandTest*************");
-            BrandTest();
-            Console.WriteLine("*************CarTest***************");
-            CarTest();
+            //Console.WriteLine("************ColorTest*************");
+            //ColorTest();
+            //Console.WriteLine("*************BrandTest*************");
+            //BrandTest();
+            //Console.WriteLine("*************CarTest***************");
+            //CarTest();
+            //Console.WriteLine("*************RentalTest************");
+
+            RentalManager rentalManager = new RentalManager(new EfRentalDal());
+
+            Rental rental1 = new Rental() { CarId = 13, CustomerId = 13, RentDate = new DateTime(2022, 01, 10)};
+
+            rentalManager.Add(rental1);
+            Console.WriteLine(rentalManager.Add(rental1).Message);
+
+
+
 
         }
 
