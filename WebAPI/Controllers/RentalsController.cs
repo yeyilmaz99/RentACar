@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Entities.Concrete;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -30,6 +31,17 @@ namespace WebAPI.Controllers
         public IActionResult Get(int id)
         {
             var result = _rentalService.GetById(id);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
+        [HttpPost("add")]
+        public IActionResult Add(Rental rental)
+        {
+            var result = _rentalService.Add(rental);
             if (result.Success)
             {
                 return Ok(result);
