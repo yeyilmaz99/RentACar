@@ -34,6 +34,8 @@ namespace WebAPI
             services.AddControllers();
             services.AddSingleton<ICarService, CarManager>();
             services.AddSingleton<ICarDal, EfCarDal>();
+            services.AddSingleton<IBrandService, BrandManager>();
+            services.AddSingleton<IBrandDal, EfBrandDal>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebAPI", Version = "v1" });
