@@ -39,5 +39,17 @@ namespace WebAPI.Controllers
         }
 
 
+        [HttpPost("add")]
+        public IActionResult Add(Customer customer)
+        {
+            var result = _customerService.Add(customer);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
+
     }
 }
