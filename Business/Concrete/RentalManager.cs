@@ -1,5 +1,7 @@
 ﻿using Business.Abstract;
 using Business.Constants;
+using Business.ValidationRules.FluentValidation;
+using Core.CrossCuttingConcerns;
 using Core.Utilities.Results.Abstract;
 using Core.Utilities.Results.Concrete;
 using DataAccess.Abstract;
@@ -23,6 +25,7 @@ namespace Business.Concrete
 
         public IResult Add(Rental rental)
         {
+            ValidationTool.Validate(new RentalValidator(), rental);
             var result = _rentalDal.GetAll().FindLast(c => c.CarId == rental.CarId);
             if (result == null)
             {
