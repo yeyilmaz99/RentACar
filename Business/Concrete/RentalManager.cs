@@ -32,20 +32,16 @@ namespace Business.Concrete
             if (result == null)
             {
                 _rentalDal.Add(rental);
-                Console.WriteLine("Eklendi");
-                return new SuccessResult();
-
+                return new SuccessResult(Messages.Added);
             }
             if (result.ReturnDate == null)
             {
-                Console.WriteLine("Eklenemedi");
-                return new ErrorResult();
+                return new ErrorResult(Messages.NotAdded);
             }
             else
             {
-                Console.WriteLine("3.de Eklendi");
                 _rentalDal.Add(rental);
-                return new SuccessResult();
+                return new SuccessResult(Messages.Added);
             }
 
 
