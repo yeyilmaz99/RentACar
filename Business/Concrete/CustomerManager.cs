@@ -21,6 +21,7 @@ namespace Business.Concrete
         public CustomerManager(ICustomerDal customerDal)
         {
             _customerDal = customerDal;
+
         }
 
 
