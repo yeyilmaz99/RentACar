@@ -28,10 +28,10 @@ namespace ConsoleUI
         {
             RentalManager rentalManager = new RentalManager(new EfRentalDal());
 
-            Rental rental1 = new Rental() { CarId = 20, CustomerId = 20, RentDate = new DateTime(2022, 01, 10)};
+            Rental rental1 = new Rental() { CarId = 29, CustomerId = 29, RentDate = new DateTime(2022, 05, 10) };
 
-            rentalManager.Add(rental1);
-            
+            var result = rentalManager.Add(rental1);
+            Console.WriteLine(result.Message);
         }
 
         private static void CarTest()
