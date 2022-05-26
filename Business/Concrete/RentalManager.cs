@@ -3,6 +3,7 @@ using Business.Constants;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Validation;
 using Core.CrossCuttingConcerns;
+using Core.Utilities.Business;
 using Core.Utilities.Results.Abstract;
 using Core.Utilities.Results.Concrete;
 using DataAccess.Abstract;
@@ -28,28 +29,22 @@ namespace Business.Concrete
         [ValidationAspect(typeof(RentalValidator))]
         public IResult Add(Rental rental)
         {
-            var result = _rentalDal.GetAll().FindLast(c => c.CarId == rental.CarId);
-            if (result == null)
+            IResult result = BusinessRules.Run(CheckIfCarOfRentalIsReturned(rental.CarId));
+
+            if (result != null)
             {
-                _rentalDal.Add(rental);
-                return new SuccessResult(Messages.Added);
-            }
-            if (result.ReturnDate == null)
-            {
-                return new ErrorResult(Messages.NotAdded);
-            }
-            else
-            {
-                _rentalDal.Add(rental);
-                return new SuccessResult(Messages.Added);
+                return result;
             }
 
+            _rentalDal.Add(rental);
+
+            return new SuccessResult(Messages.Added);
 
         }
 
         public IResult Delete(Rental rental)
         {
-            if(DateTime.Now.Hour == 22)
+            if (DateTime.Now.Hour == 22)
             {
                 return new ErrorResult();
             }
@@ -69,12 +64,29 @@ namespace Business.Concrete
 
         public IResult Update(Rental rental)
         {
-            if(DateTime.Now.Hour == 22)
+            if (DateTime.Now.Hour == 22)
             {
                 return new ErrorResult();
             }
             _rentalDal.Update(rental);
             return new SuccessResult();
         }
+
+        private IResult CheckIfCarOfRentalIsReturned(int id)
+        {
+            var result = _rentalDal.GetAll(c => c.CarId == id).FindLast(c => c.CarId == id);
+
+            if (result == null)
+            {
+                return new SuccessResult();
+            }
+            if (result.ReturnDate == null)
+            {
+                return new ErrorResult();
+            }
+            return new SuccessResult();
+        }
+
+
     }
 }
