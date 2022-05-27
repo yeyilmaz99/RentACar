@@ -17,7 +17,7 @@ namespace Core.Entities.Concrete
         public bool Status { get; set; }
     }
 
-    public class OperationClaim 
+    public class OperationClaim : IEntity
     {
         public int Id { get; set; }
         public string Name { get; set; }
