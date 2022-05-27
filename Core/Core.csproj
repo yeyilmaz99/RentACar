@@ -6,6 +6,8 @@
 
   <ItemGroup>
     <Folder Include="DataAccess\EntityFramework\" />
+    <Folder Include="Utilities\Security\Encryption\" />
+    <Folder Include="Utilities\Security\JWT\" />
   </ItemGroup>
 
   <ItemGroup>
