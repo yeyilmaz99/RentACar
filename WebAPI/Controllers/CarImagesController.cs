@@ -19,8 +19,8 @@ namespace WebAPI.Controllers
         {
             _carImageService = carImageService;
         }
-
-
+                            //claims
+        //[SecuredOperation("admin,product.add")]
         [HttpPost("add")]
         public IActionResult Add([FromForm] ImageAddDto imageDto)
         {
