@@ -6,7 +6,6 @@
 
   <ItemGroup>
     <Folder Include="DataAccess\EntityFramework\" />
-    <Folder Include="Utilities\Security\JWT\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -15,6 +14,7 @@
     <PackageReference Include="Autofac.Extras.DynamicProxy" Version="6.0.1" />
     <PackageReference Include="FluentValidation" Version="11.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="5.0.0" />
   </ItemGroup>
 
 </Project>
