@@ -2,8 +2,6 @@
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Validation;
 using Core.CrossCuttingConcerns;
-using Core.Utilities.Results.Abstract;
-using Core.Utilities.Results.Concrete;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using System;
@@ -11,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Core.Entities.Concrete;
 
 namespace Business.Concrete
 {
@@ -23,45 +22,19 @@ namespace Business.Concrete
             _userDal = userDal;
         }
 
+        public List<OperationClaim> GetClaims(User user)
+        {
+            return _userDal.GetClaims(user);
+        }
 
-        [ValidationAspect(typeof(UserValidator))]
-        public IResult Add(User user)
+        public void Add(User user)
         {
             _userDal.Add(user);
-            return new SuccessResult();
-
         }
 
-        public IResult Delete(User user)
+        public User GetByMail(string email)
         {
-            if(DateTime.Now.Hour == 22)
-            {
-                return new ErrorResult();
-            }
-            _userDal.Delete(user);
-            return new SuccessResult();
-
-        }
-
-        public IDataResult<List<User>> GetAll()
-        {
-            return new SuccessDataResult<List<User>>(_userDal.GetAll());
-
-        }
-
-        public IDataResult<User> GetById(int id)
-        {
-            return new SuccessDataResult<User>(_userDal.Get(u=> u.Id == id));
-        }
-
-        public IResult Update(User user)
-        {
-            if (DateTime.Now.Hour == 22)
-            {
-                return new ErrorResult();
-            }
-            _userDal.Update(user);
-            return new SuccessResult();
+            return _userDal.Get(u => u.Email == email);
         }
     }
 }
