@@ -25,5 +25,6 @@ namespace Business.Constants
         internal static string SuccessfulLogin = "Başarıyla giriş yapıldı";
         internal static string UserAlreadyExists = "Kullanıcı zaten var";
         internal static string AccessTokenCreated = "Token oluşturuldu";
+        public static string CarNameIsAlreadyExist = "Bu isimde zaten bir araba var";
     }
 }
