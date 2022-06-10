@@ -37,31 +37,36 @@ namespace WebAPI.Controllers
 
             carImage.ImagePath = carImage.ImageName + ".png";
 
-            if (carImage.Image.Length>0)
-            {
-                var imagePath = Path.Combine(Directory.GetCurrentDirectory(), @"images/" + carImage.ImageName + ".png");
-
-                var filePath = Path.Combine(Directory.GetCurrentDirectory(), @"images/");
-
-                if (!Directory.Exists(filePath))
-                {
-                    Directory.CreateDirectory(filePath);
-                }
-
-
-                using (var stream = System.IO.File.Create(imagePath))
-                {
-                    carImage.Image.CopyTo(stream);
-                }
-            }
 
             var result = _carImageService.Add(carImage);
             if (result.Success == true)
             {
-                return Ok(result);
-            }
-            return BadRequest(result);
+                if (carImage.Image.Length > 0)
+                {
+                    var imagePath = Path.Combine(Directory.GetCurrentDirectory(), @"images/" + carImage.ImageName + ".png");
 
+                    var filePath = Path.Combine(Directory.GetCurrentDirectory(), @"images/");
+
+                    if (!Directory.Exists(filePath))
+                    {
+                        Directory.CreateDirectory(filePath);
+                    }
+
+
+                    using (var stream = System.IO.File.Create(imagePath))
+                    {
+
+                        carImage.Image.CopyTo(stream);
+
+                    }
+                }
+                return Ok(result);
+
+            }
+
+
+
+            return BadRequest(result);
         }
 
         [HttpGet("getall")]
