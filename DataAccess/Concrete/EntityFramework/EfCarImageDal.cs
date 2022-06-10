@@ -11,5 +11,12 @@ namespace DataAccess.Concrete.EntityFramework
 {
     public class EfCarImageDal : EfEntityRepositoryBase<CarImage, MyDatabaseContext>, ICarImageDal
     {
+        public List<CarImage> GetDefaultImage()
+        {
+            using (MyDatabaseContext context = new MyDatabaseContext())
+            {
+                return context.Set<CarImage>().ToList();
+            }
+        }
     }
 }
