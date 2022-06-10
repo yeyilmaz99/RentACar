@@ -11,6 +11,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Business.Constants;
 
 namespace Business.Concrete
 {
@@ -49,6 +50,12 @@ namespace Business.Concrete
 
         public IDataResult<List<CarImage>> GetAllImagesByCarId(int carId)
         {
+            IResult result = BusinessRules.Run(CheckIfCarImagesNull(carId));
+            if (result != null)
+            {
+                return new ErrorDataResult<List<CarImage>>(GetDefaultImage(carId).Data);
+            }
+
             return new SuccessDataResult<List<CarImage>>(_carImageDal.GetAll(c => c.CarId == carId));
         }
 
@@ -65,6 +72,23 @@ namespace Business.Concrete
                 return new ErrorResult();
             }
             return new SuccessResult();
+        }
+
+        private IResult CheckIfCarImagesNull(int carId)
+        {
+            var result = _carImageDal.GetAll(c => c.CarId == carId);
+            if (result.Count == 0)
+            {
+                return new ErrorResult();
+            }
+            return new SuccessResult();
+        }
+        private IDataResult<List<CarImage>> GetDefaultImage(int carId)
+        {
+
+            List<CarImage> carImage = new List<CarImage>();
+            carImage.Add(new CarImage { CarId = carId, Date = DateTime.Now, ImagePath = "DefaultImage.jpg" });
+            return new SuccessDataResult<List<CarImage>>(carImage);
         }
     }
 }
