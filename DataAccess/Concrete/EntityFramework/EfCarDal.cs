@@ -14,11 +14,11 @@ namespace DataAccess.Concrete.EntityFramework
 {
     public class EfCarDal : EfEntityRepositoryBase<Car, MyDatabaseContext>, ICarDal
     {
-        public List<CarDetailDto> GetCarDetails()
+        public List<CarDetailDto> GetCarsDetails(Expression<Func<Car, bool>> filter = null)
         {
             using (MyDatabaseContext context = new MyDatabaseContext())
             {
-                var result = from c in context.Cars
+                var result = from c in filter == null ? context.Cars : context.Cars.Where(filter)
                              join b in context.Brands on c.BrandId equals b.BrandId
                              join clr in context.Colors on c.ColorId equals clr.ColorId
                              select new CarDetailDto
@@ -27,9 +27,32 @@ namespace DataAccess.Concrete.EntityFramework
                                  CarName = c.CarName,
                                  BrandName = b.BrandName,
                                  ColorName = clr.ColorName,
-                                 DailyPrice = c.DailyPrice
+                                 DailyPrice = c.DailyPrice,
+                                 Description = c.Description
                              };
                 return result.ToList();
+            }
+        }
+
+        public CarDetailDto GetCarDetail(Expression<Func<Car, bool>> filter)
+        {
+            using (var context = new MyDatabaseContext())
+            {
+                var result = from c in context.Cars.Where(filter)
+                    join clr in context.Colors
+                        on c.ColorId equals clr.ColorId
+                    join b in context.Brands
+                        on c.BrandId equals b.BrandId
+                    select new CarDetailDto { 
+                        CarId = c.Id,
+                        BrandName = b.BrandName, 
+                        ColorName = clr.ColorName, 
+                        CarName = c.CarName, 
+                        DailyPrice = c.DailyPrice,
+                        Description = c.Description
+                    };
+
+                return result.SingleOrDefault();
             }
         }
     }
