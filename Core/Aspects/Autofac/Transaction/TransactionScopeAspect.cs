@@ -20,7 +20,9 @@ namespace Core.Aspects.Autofac.Transaction
                     invocation.Proceed();
                     transactionScope.Complete();
                 }
+#pragma warning disable CS0168
                 catch (System.Exception e)
+#pragma warning restore CS0168
                 {
                     transactionScope.Dispose();
                     throw;
