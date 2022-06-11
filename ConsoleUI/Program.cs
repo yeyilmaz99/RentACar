@@ -1,6 +1,5 @@
 ﻿using Business.Concrete;
 using DataAccess.Concrete.EntityFramework;
-using DataAccess.Concrete.InMemory;
 using Entities.Concrete;
 using System;
 
@@ -135,7 +134,7 @@ namespace ConsoleUI
 
             Console.WriteLine("GetCarDetails");
 
-            var result7 = carManager.GetCarDetails();
+            var result7 = carManager.GetCarsDetails();
 
             if (result7.Success == true)
             {
