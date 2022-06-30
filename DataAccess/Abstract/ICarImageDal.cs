@@ -10,6 +10,6 @@ namespace DataAccess.Abstract
 {
     public interface ICarImageDal : IEntityRepository<CarImage>
     {
-
+        List<CarImage> GetDefaultImage();
     }
 }
