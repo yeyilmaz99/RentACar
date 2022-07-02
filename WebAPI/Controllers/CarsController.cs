@@ -3,6 +3,7 @@ using Business.Abstract;
 using Entities.Concrete;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace WebAPI.Controllers
 {
@@ -100,6 +101,18 @@ namespace WebAPI.Controllers
         }
 
 
+        [HttpGet("getbybrandidandcolorid")]
+
+        public IActionResult GetByBrandIdAndColorId(int colorId,int brandId)
+        {
+            var result = _carService.GetCarsByBrandIdAndColorId(colorId,brandId);
+            if (result.Success == true)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+
+        }
 
 
     }
