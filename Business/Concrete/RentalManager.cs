@@ -35,7 +35,7 @@ namespace Business.Concrete
 
             if (result != null)
             {
-                return result;
+                return new ErrorResult(result.Message);
             }
 
             _rentalDal.Add(rental);
@@ -89,7 +89,7 @@ namespace Business.Concrete
             }
             if (result.ReturnDate == null)
             {
-                return new ErrorResult();
+                return new ErrorResult(Messages.CarIsAlreadyTaken);
             }
             return new SuccessResult();
         }
