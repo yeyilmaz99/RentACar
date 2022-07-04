@@ -17,7 +17,13 @@ namespace ConsoleUI
             //CarTest();
             //Console.WriteLine("*************RentalTest************");
 
-            RentalTest();
+
+            RentalManager rentalManager = new RentalManager(new EfRentalDal());
+
+            Rental rental1 = new Rental() { CarId = 3, CustomerId = 2, RentDate = new DateTime(2022, 05, 10) };
+
+            var result = rentalManager.Add(rental1);
+            Console.WriteLine(result.Message);
 
 
 
@@ -27,7 +33,7 @@ namespace ConsoleUI
         {
             RentalManager rentalManager = new RentalManager(new EfRentalDal());
 
-            Rental rental1 = new Rental() { CarId = 33, CustomerId = 33, RentDate = new DateTime(2022, 05, 10)};
+            Rental rental1 = new Rental() { CarId = 3, CustomerId = 2, RentDate = new DateTime(2022, 05, 10)};
 
             var result = rentalManager.Add(rental1);
             Console.WriteLine(result.Message);
