@@ -4,7 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
 {
-    public class PaymentController : Controller
+    [Route("api/[controller]")]
+    [ApiController]
+    public class PaymentController : ControllerBase
     {
         IPaymentService _paymentService;
 
@@ -18,11 +20,29 @@ namespace WebAPI.Controllers
         public IActionResult Add(Payment payment)
         {
             var result = _paymentService.Add(payment);
-            if (result.Success == true)
+            if (result.Success)
             {
                 return Ok(result);
             }
             return BadRequest(result);
         }
+
+
+
+
     }
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
