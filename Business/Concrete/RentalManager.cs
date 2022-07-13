@@ -79,7 +79,7 @@ namespace Business.Concrete
             return new SuccessResult();
         }
 
-        private IResult CheckIfCarOfRentalIsReturned(int id)
+        public IResult CheckIfCarOfRentalIsReturned(int id)
         {
             var result = _rentalDal.GetAll(c => c.CarId == id).FindLast(c => c.CarId == id);
 
