@@ -34,7 +34,7 @@ namespace Business.Concrete
 
         public IResult Delete(Brand brand)
         {
-            if(DateTime.Now.Hour == 22)
+            if(DateTime.Now.Hour == 21)
             {
                 return new ErrorResult(Messages.NotDeleted);
             }
@@ -44,8 +44,6 @@ namespace Business.Concrete
 
         public IDataResult<List<Brand>> GetAll()
         {
-
-
             return new SuccessDataResult<List<Brand>>(_brandDal.GetAll(),Messages.Listed);
         }
 
