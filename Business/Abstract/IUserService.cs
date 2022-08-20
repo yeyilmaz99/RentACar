@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Core.Entities.Concrete;
+using Core.Utilities.Results.Abstract;
 
 namespace Business.Abstract
 {
@@ -12,6 +13,7 @@ namespace Business.Abstract
     {
         List<OperationClaim> GetClaims(User user);
         void Add(User user);
+        IDataResult<List<User>> GetAll();
         User GetByMail(string email);
     }
 }
