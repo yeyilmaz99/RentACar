@@ -31,9 +31,9 @@ namespace Business.Concrete
         }
 
 
-        //[SecuredOperation("product.add,admin")]
-        //[ValidationAspect(typeof(CarValidator))]
-        //[CacheRemoveAspect("ICarService.Get")]
+        [SecuredOperation("product.add,admin")]
+        [ValidationAspect(typeof(CarValidator))]
+        [CacheRemoveAspect("ICarService.Get")]
         public IResult Add(Car car)
         {
             IResult result = BusinessRules.Run(CheckIfCarNameExist(car.CarName));
