@@ -15,18 +15,6 @@ namespace WebAPI.Controllers
              _favoriteService = favoriteService;
          }
 
-
-         [HttpGet("getUsersFavorites")]
-         public IActionResult getUsersFavorites(int userId)
-         {
-             var result = _favoriteService.GetUsersFavorites(userId);
-             if (result.Success)
-             {
-                 return Ok(result);
-             }
-
-             return BadRequest(result);
-         }
          [HttpGet("getall")]
          public IActionResult GetAll(int userId)
          {
@@ -39,10 +27,10 @@ namespace WebAPI.Controllers
              return BadRequest(result);
          }
 
-         [HttpGet("getfavoritesdetails")]
-         public IActionResult getDetails()
+         [HttpGet("getfavoritesbyuserid")]
+         public IActionResult GetFavoritesDetailsByUserId(int id)
          {
-             var result = _favoriteService.GetFavoritesDetails();
+             var result = _favoriteService.GetFavoritesByUserId(id);
              if (result.Success)
              {
                  return Ok(result);
@@ -50,5 +38,6 @@ namespace WebAPI.Controllers
 
              return BadRequest(result);
          }
+
     }
 }
