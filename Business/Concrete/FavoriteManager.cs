@@ -10,6 +10,7 @@ using Core.Utilities.Results.Concrete;
 using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework;
 using Entities.Concrete;
+using Entities.DTOs;
 
 namespace Business.Concrete
 {
@@ -27,6 +28,7 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Favorite>>(_favoriteDal.GetAll(user => user.UserId == userId));
         }
 
+
         public IResult Add(Favorite favorite)
         {
             _favoriteDal.Add(favorite);
@@ -37,6 +39,16 @@ namespace Business.Concrete
         {
             _favoriteDal.Delete(favorite);
             return new SuccessResult(Messages.Deleted);
+        }
+
+        public IDataResult<List<UserFavoriteDto>> GetUsersFavorites(int userId)
+        {
+            return new SuccessDataResult<List<UserFavoriteDto>>(_favoriteDal.GetUsersFavorites(user => user.UserId == userId));
+        }
+
+        public IDataResult<List<UserFavoriteDto>> GetFavoritesDetails()
+        {
+            return new SuccessDataResult<List<UserFavoriteDto>>(_favoriteDal.GetFavoritesDetails());
         }
     }
 }
