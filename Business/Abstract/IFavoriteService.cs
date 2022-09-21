@@ -14,7 +14,7 @@ namespace Business.Abstract
         IDataResult<List<Favorite>> GetAllFavorites(int userId);
         IResult Add(Favorite favorite);
         IResult Delete(Favorite favorite);
-        IDataResult<List<UserFavoriteDto>> GetUsersFavorites(int userId);
         IDataResult<List<UserFavoriteDto>> GetFavoritesDetails();
+        IDataResult<List<UserFavoriteDto>> GetFavoritesByUserId(int userId);
     }
 }
