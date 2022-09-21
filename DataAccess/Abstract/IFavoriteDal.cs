@@ -12,7 +12,6 @@ namespace DataAccess.Abstract
 {
     public interface IFavoriteDal : IEntityRepository<Favorite>
     {
-        List<UserFavoriteDto> GetUsersFavorites(Expression<Func<Favorite, bool>> filter);
         List<UserFavoriteDto> GetFavoritesDetails(Expression<Func<Favorite, bool>> filter = null);
 
     }
