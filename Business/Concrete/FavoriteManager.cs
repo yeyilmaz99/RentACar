@@ -41,14 +41,16 @@ namespace Business.Concrete
             return new SuccessResult(Messages.Deleted);
         }
 
-        public IDataResult<List<UserFavoriteDto>> GetUsersFavorites(int userId)
-        {
-            return new SuccessDataResult<List<UserFavoriteDto>>(_favoriteDal.GetUsersFavorites(user => user.UserId == userId));
-        }
-
         public IDataResult<List<UserFavoriteDto>> GetFavoritesDetails()
         {
             return new SuccessDataResult<List<UserFavoriteDto>>(_favoriteDal.GetFavoritesDetails());
         }
+
+        public IDataResult<List<UserFavoriteDto>> GetFavoritesByUserId(int userId)
+        {
+            return new SuccessDataResult<List<UserFavoriteDto>>(
+                _favoriteDal.GetFavoritesDetails(f => f.UserId == userId));
+        }
+
     }
 }
