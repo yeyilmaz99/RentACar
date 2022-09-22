@@ -53,6 +53,35 @@ namespace WebAPI.Controllers
              return BadRequest(result);
          }
 
+        [HttpGet("checkifalreadyaddedtofavorites")]
+
+        public IActionResult CheckIfAlreadyAddedToFavorites(int carId,int userId)
+        {
+            var result = _favoriteService.CheckIfAlreadyAddedToFavorites(carId, userId);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+
+            return BadRequest(result);
+        }
+
+        [HttpDelete("delete")]
+        public IActionResult Delete(Favorite favorite)
+        {
+            var result = _favoriteService.Delete(favorite);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+
+            return BadRequest(result);
+        }
+
+
+
+
+
 
     }
 }
