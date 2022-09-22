@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Business.Abstract;
 using Business.Constants;
+using Core.Utilities.Business;
 using Core.Utilities.Results.Abstract;
 using Core.Utilities.Results.Concrete;
 using DataAccess.Abstract;
@@ -31,6 +32,14 @@ namespace Business.Concrete
 
         public IResult Add(Favorite favorite)
         {
+
+            var result = BusinessRules.Run(CheckIfAlreadyAddedToFavorites(favorite.CarId, favorite.UserId));
+
+            if (result != null)
+            {
+                return result;
+            }
+
             _favoriteDal.Add(favorite);
             return new SuccessResult(Messages.Added);
         }
@@ -41,16 +50,23 @@ namespace Business.Concrete
             return new SuccessResult(Messages.Deleted);
         }
 
-        public IDataResult<List<UserFavoriteDto>> GetFavoritesDetails()
-        {
-            return new SuccessDataResult<List<UserFavoriteDto>>(_favoriteDal.GetFavoritesDetails());
-        }
-
         public IDataResult<List<UserFavoriteDto>> GetFavoritesByUserId(int userId)
         {
             return new SuccessDataResult<List<UserFavoriteDto>>(
                 _favoriteDal.GetFavoritesDetails(f => f.UserId == userId));
         }
 
+        public IResult CheckIfAlreadyAddedToFavorites(int carId, int userId)
+        {
+            var result = _favoriteDal.GetAll(user => user.UserId == userId).FindLast(c => c.CarId == carId);
+
+            if (result == null)
+            {
+                return new SuccessResult();
+            }
+            return new ErrorResult(Messages.CarIsAlreadyAddedToFavorites);
+            
+
+        }
     }
 }
