@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Entities.Concrete;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,7 +16,20 @@ namespace WebAPI.Controllers
              _favoriteService = favoriteService;
          }
 
-         [HttpGet("getall")]
+
+         [HttpPost("add")]
+         public IActionResult Add(Favorite favorite)
+         {
+             var result = _favoriteService.Add(favorite);
+             if (result.Success)
+             {
+                 return Ok(result);
+             }
+
+             return BadRequest(result);
+         }
+
+        [HttpGet("getall")]
          public IActionResult GetAll(int userId)
          {
              var result = _favoriteService.GetAllFavorites(userId);
@@ -38,6 +52,7 @@ namespace WebAPI.Controllers
 
              return BadRequest(result);
          }
+
 
     }
 }
