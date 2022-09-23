@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Business.Abstract;
 using Business.Constants;
+using Core.Entities.Concrete;
 using Core.Utilities.Business;
 using Core.Utilities.Results.Abstract;
 using Core.Utilities.Results.Concrete;
@@ -46,7 +47,8 @@ namespace Business.Concrete
 
         public IResult Delete(Favorite favorite)
         {
-            _favoriteDal.Delete(favorite);
+            var result = _favoriteDal.GetAll(user => user.UserId == favorite.UserId).FindLast(c => c.CarId == favorite.CarId);
+            _favoriteDal.Delete(result);
             return new SuccessResult(Messages.Deleted);
         }
 
