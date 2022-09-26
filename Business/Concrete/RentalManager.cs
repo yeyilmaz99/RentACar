@@ -27,8 +27,12 @@ namespace Business.Concrete
         }
 
 
+        public IDataResult<List<RentalDetailDto>> GetRentalDetailsByUserId(int userId)
+        {
+            return new SuccessDataResult<List<RentalDetailDto>>(_rentalDal.GetRentalDetails(rental => rental.UserId == userId));
+        }
 
-        [ValidationAspect(typeof(RentalValidator))]
+        //[ValidationAspect(typeof(RentalValidator))]
         public IResult Add(Rental rental)
         {
             IResult result = BusinessRules.Run(CheckIfCarOfRentalIsReturned(rental.CarId));
