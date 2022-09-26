@@ -13,7 +13,7 @@ namespace DataAccess.Concrete.EntityFramework
 {
     public class EfFavoriteDal : EfEntityRepositoryBase<Favorite, MyDatabaseContext>, IFavoriteDal
     {
-        public List<UserFavoriteDto> GetFavoritesDetails(Expression<Func<Favorite, bool>> filter = null)
+        public List<UserFavoriteDto> GetFavoritesDetails(Expression<Func<Favorite, bool>> filter)
         {
             using (MyDatabaseContext context = new MyDatabaseContext())
             {
