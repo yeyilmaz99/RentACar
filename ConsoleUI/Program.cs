@@ -22,8 +22,10 @@ namespace ConsoleUI
 
             Rental rental1 = new Rental() { CarId = 3, CustomerId = 2, RentDate = new DateTime(2022, 05, 10) };
 
-            var result = rentalManager.Add(rental1);
-            Console.WriteLine(result.Message);
+            //var result = rentalManager.Add(rental1);
+            //Console.WriteLine(result.Message);*/
+            var rentals = rentalManager.GetAll();
+            Console.WriteLine(rentals);
 
 
 
