@@ -36,9 +36,9 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Findeks>>(_findeksDal.GetAll(), Messages.Listed);
         }
 
-        public IDataResult<Findeks> GetById(int id)
+        public IDataResult<Findeks> GetById(int userId)
         {
-            throw new NotImplementedException();
+            return new SuccessDataResult<Findeks>(_findeksDal.Get(f => f.UserId == userId));
         }
 
         public IResult Update(Findeks findeks)
