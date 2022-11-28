@@ -26,7 +26,8 @@ namespace Business.Concrete
 
         public IResult Delete(Findeks findeks)
         {
-            throw new NotImplementedException();
+            _findeksDal.Delete(findeks);
+            return new SuccessResult(Messages.Added);
         }
 
         public IDataResult<List<Findeks>> GetAll()
