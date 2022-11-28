@@ -5,6 +5,7 @@ using Business.Constants;
 using Core.Utilities.Results.Abstract;
 using Core.Utilities.Results.Concrete;
 using DataAccess.Abstract;
+using DataAccess.Concrete.EntityFramework;
 using Entities.Concrete;
 
 namespace Business.Concrete
@@ -32,7 +33,7 @@ namespace Business.Concrete
 
         public IDataResult<List<Findeks>> GetAll()
         {
-            throw new NotImplementedException();
+            return new SuccessDataResult<List<Findeks>>(_findeksDal.GetAll(), Messages.Listed);
         }
 
         public IDataResult<Findeks> GetById(int id)
