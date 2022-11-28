@@ -70,5 +70,13 @@ namespace Business.Concrete
             
 
         }
+
+        public IDataResult<IEnumerable<UserFavoriteDto>> GetRecentFavoritesByUserId(int userId)
+        {
+            var result = _favoriteDal.GetFavoritesDetails(user => user.UserId == userId);
+            var result1 = result.Skip(Math.Max(0, result.Count() - 3));
+
+            return new SuccessDataResult<IEnumerable<UserFavoriteDto>>(result1);
+        }
     }
 }
