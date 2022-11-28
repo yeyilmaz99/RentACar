@@ -82,6 +82,17 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
+        [HttpGet("getrecentrentalsbyuserid")]
+        public IActionResult GetRecents(int userId)
+        {
+            var result = _rentalService.GetRecentRentalsByUserId(userId);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
 
 
     }
