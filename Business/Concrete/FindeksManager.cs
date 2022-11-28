@@ -28,7 +28,7 @@ namespace Business.Concrete
         public IResult Delete(Findeks findeks)
         {
             _findeksDal.Delete(findeks);
-            return new SuccessResult(Messages.Added);
+            return new SuccessResult(Messages.Deleted);
         }
 
         public IDataResult<List<Findeks>> GetAll()
@@ -44,7 +44,7 @@ namespace Business.Concrete
         public IResult Update(Findeks findeks)
         {
             _findeksDal.Update(findeks);
-            return new SuccessResult(Messages.Added);
+            return new SuccessResult(Messages.Updated);
         }
     }
 }
