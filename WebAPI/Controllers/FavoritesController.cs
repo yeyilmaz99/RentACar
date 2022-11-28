@@ -79,6 +79,23 @@ namespace WebAPI.Controllers
         }
 
 
+        [HttpGet("getrecent")]
+
+        public IActionResult GetRecentFavorites(int userId)
+        {
+            var result = _favoriteService.GetRecentFavoritesByUserId(userId);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+
+            return BadRequest(result);
+        }
+
+
+
+
+
 
 
 
