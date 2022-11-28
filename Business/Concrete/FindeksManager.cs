@@ -42,7 +42,8 @@ namespace Business.Concrete
 
         public IResult Update(Findeks findeks)
         {
-            throw new NotImplementedException();
+            _findeksDal.Update(findeks);
+            return new SuccessResult(Messages.Added);
         }
     }
 }
