@@ -98,6 +98,12 @@ namespace Business.Concrete
             return new SuccessResult();
         }
 
+        public IDataResult<IEnumerable<RentalDetailDto>> GetRecentRentalsByUserId(int userId)
+        {
+            var result = _rentalDal.GetRentalDetails(rental => rental.UserId == userId);
+            var result1 = result.Skip(Math.Max(0, result.Count() - 3));
 
+            return new SuccessDataResult<IEnumerable<RentalDetailDto>>(result1);
+        }
     }
 }
