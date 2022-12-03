@@ -46,6 +46,23 @@ namespace WebAPI.Controllers
         }
 
 
+        [HttpGet("checkIfSufficient")]
+        public IActionResult CheckIfSuffucient(int carFP, int userId)
+        {
+            var result = _findeksService.CheckIfFPSufficient(carFP,userId);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+
+            return BadRequest(result);
+        }
+
+
+
+
+
+
 
 
     }
