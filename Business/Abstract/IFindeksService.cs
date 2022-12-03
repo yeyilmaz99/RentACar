@@ -10,7 +10,7 @@ namespace Business.Abstract
         IDataResult<List<Findeks>> GetAll();
         IDataResult<Findeks> GetById(int userId);
         IResult Add(Findeks findeks);
-        IResult CheckIfFPSufficient(int carFP, int userId);
+        IResult CheckIfFPSufficient(int carFP, IDataResult<Findeks> findeks);
         IResult Update(Findeks findeks);
         IResult Delete(Findeks findeks);
     }
