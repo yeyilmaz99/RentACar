@@ -28,5 +28,7 @@ namespace Business.Constants
         public static string CarNameIsAlreadyExist = "Bu isimde zaten bir araba var";
         public static string CarIsAlreadyTaken = "Araç şu anda zaten kiralanmış durumdadır";
         public static string CarIsAlreadyAddedToFavorites = "Car is already added to favorites";
+        public static string FPIsSufficient = "FP is Sufficient";
+        public static string FPIsNotSufficient = "FP is not Sufficient";
     }
 }
