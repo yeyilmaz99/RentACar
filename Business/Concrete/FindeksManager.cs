@@ -25,6 +25,18 @@ namespace Business.Concrete
             return new SuccessResult(Messages.Added);
         }
 
+        public IResult CheckIfFPSufficient(int carFP, int userId)
+        {
+            var userFP = _findeksDal.Get(user => user.Id == userId).FindeksPoint;
+            if(userFP >= carFP)
+            {
+                return new SuccessResult(Messages.FPIsSufficient);
+            }
+            else
+            {
+                return new ErrorResult(Messages.FPIsNotSufficient);
+            }
+        }
 
         public IResult Delete(Findeks findeks)
         {
