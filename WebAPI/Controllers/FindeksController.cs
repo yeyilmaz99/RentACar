@@ -49,7 +49,10 @@ namespace WebAPI.Controllers
         [HttpGet("checkIfSufficient")]
         public IActionResult CheckIfSuffucient(int carFP, int userId)
         {
-            var result = _findeksService.CheckIfFPSufficient(carFP,userId);
+
+            var result1 = _findeksService.GetById(userId);
+
+            var result = _findeksService.CheckIfFPSufficient(carFP, result1);
             if (result.Success)
             {
                 return Ok(result);
