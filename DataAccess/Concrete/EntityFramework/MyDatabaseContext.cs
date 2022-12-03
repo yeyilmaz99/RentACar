@@ -30,6 +30,7 @@ namespace DataAccess.Concrete.EntityFramework
         public DbSet<UserOperationClaim> UserOperationClaims { get; set; }
         public DbSet<Favorite> Favorites { get; set; }
         public DbSet<Findeks> Findeks { get; set; }
+        public DbSet<CarFindeks> CarFindeks { get; set; }
 
 
 
