@@ -32,17 +32,18 @@ namespace Business.Concrete
 
         public IDataResult<List<CarFindeks>> GetAll()
         {
-            throw new NotImplementedException();
+            return new SuccessDataResult<List<CarFindeks>>(_carFindeksDal.GetAll());
         }
 
         public IDataResult<CarFindeks> GetById(int id)
         {
-            throw new NotImplementedException();
+            return new SuccessDataResult<CarFindeks>(_carFindeksDal.Get(c => c.CarId == id));
         }
 
         public IResult Update(CarFindeks carFindeks)
         {
-            throw new NotImplementedException();
+            _carFindeksDal.Update(carFindeks);
+            return new SuccessResult(Messages.Updated);
         }
     }
 }
