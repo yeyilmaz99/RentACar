@@ -25,6 +25,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.Added);
         }
 
+
         public IResult Delete(Findeks findeks)
         {
             _findeksDal.Delete(findeks);
@@ -46,6 +47,7 @@ namespace Business.Concrete
             _findeksDal.Update(findeks);
             return new SuccessResult(Messages.Updated);
         }
+
     }
 }
 
