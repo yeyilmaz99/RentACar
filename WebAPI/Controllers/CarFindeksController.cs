@@ -54,6 +54,19 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
+
+        [HttpPatch("update")]
+        public IActionResult Update(CarFindeks carFindeks)
+        {
+            var result = _carFindeksService.Update(carFindeks);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+
+            return BadRequest(result);
+        }
+
     }
 }
 
