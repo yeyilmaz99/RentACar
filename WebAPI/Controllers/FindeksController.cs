@@ -52,6 +52,7 @@ namespace WebAPI.Controllers
 
             var result1 = _findeksService.GetById(userId);
 
+
             var result = _findeksService.CheckIfFPSufficient(carFP, result1);
             if (result.Success)
             {
