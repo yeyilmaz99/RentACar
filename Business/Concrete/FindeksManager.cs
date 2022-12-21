@@ -27,8 +27,13 @@ namespace Business.Concrete
 
         public IResult CheckIfFPSufficient(int carFP, IDataResult<Findeks> findeks)
         {
-            
-            var userFP = findeks.Data.FindeksPoint;
+
+            var userFP = 0;
+
+            if(findeks.Data is not null)
+            {
+                userFP = findeks.Data.FindeksPoint;
+            }
 
 
                 if (userFP >= carFP)
