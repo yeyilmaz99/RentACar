@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Core.Entities.Concrete;
 using Core.Utilities.Results.Abstract;
+using Entities.DTOs;
 
 namespace Business.Abstract
 {
@@ -13,7 +14,9 @@ namespace Business.Abstract
     {
         IDataResult<List<OperationClaim>> GetClaims(User user);
         IResult Add(User user);
+        IResult Update(User user);
         IDataResult<List<User>> GetAll();
+        IDataResult<List<UserDetailDto>> GetUserDetails();
         IDataResult<User> GetByMail(string email);
     }
 }
