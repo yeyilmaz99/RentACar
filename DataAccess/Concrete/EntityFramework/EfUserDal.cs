@@ -8,6 +8,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using Core.Entities.Concrete;
+using Entities.DTOs;
 
 namespace DataAccess.Concrete.EntityFramework
 {
@@ -24,6 +25,27 @@ namespace DataAccess.Concrete.EntityFramework
                     select new OperationClaim { Id = operationClaim.Id, Name = operationClaim.Name };
                 return result.ToList();
 
+            }
+        }
+
+        public List<UserDetailDto> GetUserDetails()
+        {
+            using (var context = new MyDatabaseContext())
+            {
+                var result = from u in context.Users
+                             join f in context.Findeks
+                             on u.Id equals f.UserId
+                             select new UserDetailDto
+                             {
+                                 Id = u.Id,
+                                 FirstName = u.FirstName,
+                                 LastName = u.LastName,
+                                 Email = u.Email,
+                                 Status = u.Status,
+                                 FindeksPoint = f.FindeksPoint
+                                 
+                             };
+                return result.ToList();
             }
         }
     }
