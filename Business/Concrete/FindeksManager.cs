@@ -60,13 +60,27 @@ namespace Business.Concrete
 
         public IDataResult<Findeks> GetById(int userId)
         {
-            return new SuccessDataResult<Findeks>(_findeksDal.Get(f => f.UserId == userId));
+            return new SuccessDataResult<Findeks>(_findeksDal.Get(f => f.UserId == userId), Messages.Listed);
         }
 
         public IResult Update(Findeks findeks)
         {
-            _findeksDal.Update(findeks);
+            var findeks1 = _findeksDal.Get(f => f.UserId == findeks.UserId);
+            findeks1.FindeksPoint = findeks.FindeksPoint;
+            _findeksDal.Update(findeks1);
             return new SuccessResult(Messages.Updated);
+        }
+
+
+        public IResult checkIfAlreadyExist(int userId)
+        {
+            var result = _findeksDal.Get(f => f.UserId == userId);
+
+            if (result != null)
+            {
+                return new SuccessResult();
+            }
+            return new ErrorResult();   
         }
 
     }
