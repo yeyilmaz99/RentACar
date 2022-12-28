@@ -11,6 +11,7 @@ namespace Business.Abstract
         IDataResult<Findeks> GetById(int userId);
         IResult Add(Findeks findeks);
         IResult CheckIfFPSufficient(int carFP, IDataResult<Findeks> findeks);
+        IResult checkIfAlreadyExist(int userId);
         IResult Update(Findeks findeks);
         IResult Delete(Findeks findeks);
     }
