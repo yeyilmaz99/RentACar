@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Business.Abstract;
+using Entities.Concrete;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -10,7 +11,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
-    public class FindeksController : Controller
+    [ApiController]
+    public class FindeksController : ControllerBase
     {
         IFindeksService _findeksService;
 
@@ -34,7 +36,7 @@ namespace WebAPI.Controllers
 
 
         [HttpGet("getByUserId")]
-        public IActionResult GetFavoritesDetailsByUserId(int userId)
+        public IActionResult getByUserId(int userId)
         {
             var result = _findeksService.GetById(userId);
             if (result.Success)
@@ -52,7 +54,6 @@ namespace WebAPI.Controllers
 
             var result1 = _findeksService.GetById(userId);
 
-
             var result = _findeksService.CheckIfFPSufficient(carFP, result1);
             if (result.Success)
             {
@@ -61,6 +62,53 @@ namespace WebAPI.Controllers
 
             return BadRequest(result);
         }
+
+
+
+        [HttpPatch("update")]
+        public IActionResult Update(Findeks findeks)
+        {
+            var result = _findeksService.Update(findeks);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+
+            return BadRequest(result);
+        }
+
+
+
+        [HttpPost("add")]
+        public IActionResult Add(Findeks findeks)
+        {
+            var result = _findeksService.Add(findeks);
+
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+
+            return BadRequest(result);
+        }
+
+
+        [HttpGet("checkIfAlreadyExists")]
+        public IActionResult CheckIfAlreadyExists(int userId)
+        {
+            var result = _findeksService.checkIfAlreadyExist(userId);
+
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+
+            return BadRequest(result);
+        }
+
+
+
+
 
 
 
