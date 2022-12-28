@@ -13,6 +13,7 @@ using Business.Constants;
 using Core.Entities.Concrete;
 using Core.Utilities.Results.Abstract;
 using Core.Utilities.Results.Concrete;
+using Entities.DTOs;
 
 namespace Business.Concrete
 {
@@ -44,6 +45,20 @@ namespace Business.Concrete
         public IDataResult<User> GetByMail(string email)
         {
             return new SuccessDataResult<User>(_userDal.Get(u => u.Email == email));
+        }
+
+        public IDataResult<List<UserDetailDto>> GetUserDetails()
+        {
+            var result = _userDal.GetUserDetails();
+            return new SuccessDataResult<List<UserDetailDto>>(result);
+        }
+
+        public IResult Update(User user)
+        {
+            var userToUpdate = _userDal.Get(u => u.Id == user.Id);
+            userToUpdate.Status = user.Status;
+            _userDal.Update(userToUpdate);
+            return new SuccessResult(Messages.Updated);
         }
     }
 }
