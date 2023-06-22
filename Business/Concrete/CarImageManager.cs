@@ -59,6 +59,8 @@ namespace Business.Concrete
             return new SuccessDataResult<List<CarImage>>(_carImageDal.GetAll(c => c.CarId == carId));
         }
 
+
+
         public IResult Update(CarImage carImage)
         {
             throw new NotImplementedException();
@@ -88,6 +90,12 @@ namespace Business.Concrete
             List<CarImage> carImage = new List<CarImage>();
             carImage.Add(new CarImage { CarId = carId, Date = DateTime.Now, ImagePath = "DefaultImage.jpg" });
             return new SuccessDataResult<List<CarImage>>(carImage);
+        }
+
+        public IDataResult<CarImage> GetImageByName(string name)
+        {
+            var result = _carImageDal.Get(image => image.ImageName == name);
+            return new SuccessDataResult<CarImage>(result);
         }
     }
 }

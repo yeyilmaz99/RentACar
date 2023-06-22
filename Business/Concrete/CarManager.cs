@@ -42,12 +42,34 @@ namespace Business.Concrete
             {
                 return result;
             }
-
-
             _carDal.Add(car);
             return new SuccessResult(Messages.Added);
 
         }
+        public IDataResult<Car> AddCar(CarAndImageDto carAndImageDto)
+        {
+            Car car = new Car();
+
+            car.BrandId = carAndImageDto.BrandId;
+            car.CarName = carAndImageDto.CarName;
+            car.ColorId = carAndImageDto.ColorId;
+            car.DailyPrice = carAndImageDto.DailyPrice;
+            car.Description = carAndImageDto.Description;
+            car.FindeksPoint = carAndImageDto.FindeksPoint;
+            car.ModelYear = carAndImageDto.ModelYear;
+            car.Id = carAndImageDto.Id;
+            //IDataResult result = BusinessRules.Run(CheckIfCarNameExist(car.CarName));
+
+            //if (result != null)
+            //{
+            //    return result;
+            //}
+            _carDal.Add(car);
+
+            return new SuccessDataResult<Car>(car);
+        }
+
+
 
         [CacheRemoveAspect("ICarService.Get")]
         public IResult Delete(Car car)
@@ -56,9 +78,6 @@ namespace Business.Concrete
             {
                 return new ErrorResult(Messages.NotDeleted);
             }
-
-            
-
             _carDal.Delete(car);
             return new SuccessResult(Messages.Deleted);
 
@@ -144,6 +163,8 @@ namespace Business.Concrete
             return new SuccessResult();
 
         }
+
+
     }
 
 

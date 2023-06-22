@@ -80,6 +80,18 @@ namespace WebAPI.Controllers
             return Ok(result);
         }
 
+
+        [HttpGet("get")]
+        public IActionResult GetImageByName(string name)
+        {
+            var result = _carImageService.GetImageByName(name);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return Ok(result);
+        }
+
     }
 
 }
