@@ -45,11 +45,19 @@ namespace Business.Concrete
             return new SuccessResult(Messages.Added);
         }
 
-        public IResult Delete(Favorite favorite)
+        public IResult Delete(int userId, int carId)
         {
-            var result = _favoriteDal.GetAll(user => user.UserId == favorite.UserId).FindLast(c => c.CarId == favorite.CarId);
-            _favoriteDal.Delete(result);
-            return new SuccessResult(Messages.Deleted);
+            var result = _favoriteDal.GetAll(user => user.UserId == userId).FindLast(c => c.CarId == carId);
+            if(result != null)
+            {
+                _favoriteDal.Delete(result);
+                return new SuccessResult(Messages.Deleted);
+            }
+            else
+            {
+                return new ErrorResult(Messages.NotDeleted);
+            }
+
         }
 
         public IDataResult<List<UserFavoriteDto>> GetFavoritesByUserId(int userId)
