@@ -67,9 +67,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpDelete("delete")]
-        public IActionResult Delete(Favorite favorite)
+        public IActionResult Delete(int userId, int carId)
         {
-            var result = _favoriteService.Delete(favorite);
+            var result = _favoriteService.Delete(userId,carId);
             if (result.Success)
             {
                 return Ok(result);
