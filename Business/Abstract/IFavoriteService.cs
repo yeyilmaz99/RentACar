@@ -13,7 +13,7 @@ namespace Business.Abstract
     {
         IDataResult<List<Favorite>> GetAllFavorites(int userId);
         IResult Add(Favorite favorite);
-        IResult Delete(Favorite favorite);
+        IResult Delete(int userId, int carId);
         IDataResult<List<UserFavoriteDto>> GetFavoritesByUserId(int userId);
         IDataResult<IEnumerable<UserFavoriteDto>> GetRecentFavoritesByUserId(int userId);
         IResult CheckIfAlreadyAddedToFavorites(int carId,int userId);
