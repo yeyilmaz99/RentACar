@@ -14,8 +14,10 @@ namespace DataAccess.Concrete.EntityFramework
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             //optionsBuilder.UseSqlServer(@"Server=(localdb)\MSSQLLocalDB;Database=MyDatabase;Trusted_Connection=true");
-            //optionsBuilder.UseNpgsql("Host=localhost;Database=MyDatabase;Username=yunus;");
+            //optionsBuilder.UseNpgsql("Host=localhost;Database=MyDatabases;Username=yunus;");
             optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=postgres;Username=yunus;Password=yunus21;");
+            //optionsBuilder.UseNpgsql("Host = localhost; Database = postgres; Username = yunus; Password = yunus21;");
+
         }
 
 
