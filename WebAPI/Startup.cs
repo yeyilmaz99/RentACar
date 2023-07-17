@@ -86,7 +86,12 @@ namespace WebAPI
 
             app.UseCors(builder => builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
 
-            app.UseHttpsRedirection();
+            if (!env.IsDevelopment())
+            {
+                app.UseHttpsRedirection();
+            }
+
+            //app.UseHttpsRedirection();
 
             app.UseRouting();
 
