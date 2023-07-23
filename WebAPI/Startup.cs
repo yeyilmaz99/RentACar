@@ -108,7 +108,7 @@ namespace WebAPI
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "WebAPI v1"));
             }
 
-            app.UseCors(builder => builder.WithOrigins("http://rentacar.yeyilmaz.online","http://localhost:4200").AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
+            app.UseCors(builder => builder.WithOrigins("https://rentacar.yeyilmaz.online","http://localhost:4200").AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
 
             if (!env.IsDevelopment())
             {
