@@ -10,23 +10,23 @@ namespace Business.Constants
 {
     public static class Messages
     {
-        public static string Added = "Başarıyla Eklendi";
-        public static string NotAdded = "Eklenemedi";
-        public static string Listed = "Başarıyla Listelendi";
-        public static string NotListed = "Listelenemedi";
-        public static string Deleted = "Başarıyla Silindi";
-        public static string NotDeleted = "Silinemedi";
-        public static string Updated = "Başarıyla Güncellendi";
-        public static string NotUpdated = "Güncellenemedi";
-        public static string AuthorizationDenied = "Yetki Yok";
-        internal static string UserRegistered = "Kullanıcı kaydedildi";
-        internal static string UserNotFound = "Kullanıcı bulunamadı";
-        internal static string PasswordError = "Şifre hatalı";
-        internal static string SuccessfulLogin = "Başarıyla giriş yapıldı";
-        internal static string UserAlreadyExists = "Kullanıcı zaten var";
-        internal static string AccessTokenCreated = "Token oluşturuldu";
-        public static string CarNameIsAlreadyExist = "Bu isimde zaten bir araba var";
-        public static string CarIsAlreadyTaken = "Araç şu anda zaten kiralanmış durumdadır";
+        public static string Added = "Successfully added";
+        public static string NotAdded = "An error occurred, try again later";
+        public static string Listed = "Successfully Listed";
+        public static string NotListed = "An error occurred, try again later, NOT LISTED";
+        public static string Deleted = "Successfully Deleted";
+        public static string NotDeleted = "An error occurred, try again later, Could not delete";
+        public static string Updated = "Successfully Updated";
+        public static string NotUpdated = "An error occurred, try again later, Could not update";
+        public static string AuthorizationDenied = "Authorization Denied, No authorization";
+        internal static string UserRegistered = "User Registered Successfully";
+        internal static string UserNotFound = "User Not Found";
+        internal static string PasswordError = "Password is incorrect";
+        internal static string SuccessfulLogin = "Successfully logged in";
+        internal static string UserAlreadyExists = "User already exists";
+        internal static string AccessTokenCreated = "Token created";
+        public static string CarNameIsAlreadyExist = "There is already a car with this name";
+        public static string CarIsAlreadyTaken = "The vehicle is currently already rented";
         public static string CarIsAlreadyAddedToFavorites = "Car is already added to favorites";
         public static string FPIsSufficient = "FP is Sufficient";
         public static string FPIsNotSufficient = "FP is not Sufficient";
