@@ -93,48 +93,62 @@ namespace WebAPI.Controllers
 
         }
 
+
         [HttpPost("add")]
-        public IActionResult Add([FromForm] CarAndImageDto carAndImageDto)
+        public IActionResult Add(Car car)
         {
-            var result = _carService.AddCar(carAndImageDto);
-
-            if (!result.Success)
+            var result = _carService.Add(car);
+            if (result.Success)
             {
-                return BadRequest(result);
+                return Ok(result);
             }
-
-            CarImage carImage = new CarImage();
-            carImage.CarId = result.Data.Id;
-            carImage.ImageName = Guid.NewGuid().ToString();
-            carImage.Date = DateTime.Now;
-            carImage.ImagePath = carImage.ImageName + ".png";
-
-            if (carAndImageDto.Image != null && carAndImageDto.Image.Length > 0)
-            {
-                var imagePath = Path.Combine(Directory.GetCurrentDirectory(), "images", carImage.ImageName + ".png");
-                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "images");
-
-                if (!Directory.Exists(filePath))
-                {
-                    Directory.CreateDirectory(filePath);
-                }
-
-                using (var stream = new FileStream(imagePath, FileMode.Create))
-                {
-                    carAndImageDto.Image.CopyTo(stream);
-                }
-            }
-
-            var result1 = _carImageService.Add(carImage);
-
-            if (!result1.Success)
-            {
-                // Gerçekleşen hata durumunda resmi silme işlemi yapılabilir
-                return BadRequest(result1);
-            }
-
-            return Ok(result1);
+            return BadRequest(result);
         }
+
+        //[HttpPost("add")]
+        //public IActionResult Add([FromForm] CarAndImageDto carAndImageDto)
+        //{
+        //    var result = _carService.AddCar(carAndImageDto);
+
+        //    if (!result.Success)
+        //    {
+        //        return BadRequest(result);
+        //    }
+
+        //    CarImage carImage = new CarImage();
+        //    carImage.CarId = result.Data.Id;
+        //    carImage.ImageName = Guid.NewGuid().ToString();
+        //    carImage.Date = DateTime.Now;
+        //    carImage.ImagePath = carImage.ImageName + ".png";
+
+        //    if (carAndImageDto.Image != null && carAndImageDto.Image.Length > 0)
+        //    {
+        //        var imagePath = Path.Combine(Directory.GetCurrentDirectory(), "images", carImage.ImageName + ".png");
+        //        var filePath = Path.Combine(Directory.GetCurrentDirectory(), "images");
+
+        //        if (!Directory.Exists(filePath))
+        //        {
+        //            Directory.CreateDirectory(filePath);
+        //        }
+
+        //        using (var stream = new FileStream(imagePath, FileMode.Create))
+        //        {
+        //            carAndImageDto.Image.CopyTo(stream);
+        //        }
+        //    }
+
+        //    var result1 = _carImageService.Add(carImage);
+
+        //    if (!result1.Success)
+        //    {
+        //        // Gerçekleşen hata durumunda resmi silme işlemi yapılabilir
+        //        return BadRequest(result1);
+        //    }
+
+        //    return Ok(result1);
+        //}
+
+
 
 
 
