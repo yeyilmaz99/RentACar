@@ -34,7 +34,7 @@ namespace Business.Concrete
             }
 
             _carImageDal.Add(carImage);
-            return new SuccessResult();
+            return new SuccessResult(Messages.Added);
 
         }
 

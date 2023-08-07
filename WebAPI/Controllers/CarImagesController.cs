@@ -24,27 +24,25 @@ namespace WebAPI.Controllers
         [HttpPost("add")]
         public IActionResult Add([FromForm] ImageAddDto imageDto)
         {
-
             CarImage carImage = new CarImage();
+            carImage.CarId = imageDto.CarId;
 
-            carImage.CarId = imageDto.CarId;    
-
-            carImage.Image = imageDto.Image;
+            using (var memoryStream = new MemoryStream())
+            {
+                imageDto.Image.CopyTo(memoryStream);
+                carImage.ImageData = memoryStream.ToArray(); // Convert IFormFile to byte array
+            }
 
             carImage.ImageName = Guid.NewGuid().ToString();
-
             carImage.Date = DateTime.Now;
-
             carImage.ImagePath = carImage.ImageName + ".png";
-
 
             var result = _carImageService.Add(carImage);
             if (result.Success == true)
             {
-                if (carImage.Image.Length > 0)
+                if (carImage.ImageData.Length > 0)
                 {
                     var imagePath = Path.Combine(Directory.GetCurrentDirectory(), @"images/" + carImage.ImageName + ".png");
-
                     var filePath = Path.Combine(Directory.GetCurrentDirectory(), @"images/");
 
                     if (!Directory.Exists(filePath))
@@ -52,19 +50,11 @@ namespace WebAPI.Controllers
                         Directory.CreateDirectory(filePath);
                     }
 
-
-                    using (var stream = System.IO.File.Create(imagePath))
-                    {
-
-                        carImage.Image.CopyTo(stream);
-
-                    }
+                    // Save the image to a file
+                    System.IO.File.WriteAllBytes(imagePath, carImage.ImageData);
                 }
                 return Ok(result);
-
             }
-
-
 
             return BadRequest(result);
         }

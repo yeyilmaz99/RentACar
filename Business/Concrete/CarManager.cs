@@ -57,7 +57,6 @@ namespace Business.Concrete
             car.Description = carAndImageDto.Description;
             car.FindeksPoint = carAndImageDto.FindeksPoint;
             car.ModelYear = carAndImageDto.ModelYear;
-            car.Id = carAndImageDto.Id;
             //IDataResult result = BusinessRules.Run(CheckIfCarNameExist(car.CarName));
 
             //if (result != null)
