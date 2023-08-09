@@ -13,6 +13,7 @@ namespace Entities.DTOs
         public string Description { get; set; }
         public int FindeksPoint { get; set; }
         public IFormFile ImageData { get; set; }
+        public IFormFile[] DetailImages { get; set; } 
     }
 }
 

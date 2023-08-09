@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using Business.Abstract;
@@ -7,6 +8,7 @@ using Entities.DTOs;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace WebAPI.Controllers
 {
@@ -16,11 +18,13 @@ namespace WebAPI.Controllers
     {
         ICarService _carService;
         ICarImageService _carImageService;
+        ICarDetailImageService _carDetailImageService;
 
-        public CarsController(ICarService carservice , ICarImageService carImageService)
+        public CarsController(ICarService carservice , ICarImageService carImageService, ICarDetailImageService carDetailImageService)
         {
             _carService = carservice;
             _carImageService = carImageService;
+            _carDetailImageService = carDetailImageService;
         }
 
 
@@ -121,29 +125,33 @@ namespace WebAPI.Controllers
             using (var memoryStream = new MemoryStream())
             {
                 carAndImageDto.ImageData.CopyTo(memoryStream);
-                carImage.ImageData = memoryStream.ToArray(); // Convert IFormFile to byte array
+                carImage.ImageData = memoryStream.ToArray();
             }
+
+
+            List<CarDetailImage> carDetailImages = new List<CarDetailImage>();
+            foreach (var image in carAndImageDto.DetailImages)
+            {
+                using (var memoryStream = new MemoryStream())
+                {
+                    image.CopyTo(memoryStream);
+                    carDetailImages.Add(new CarDetailImage
+                    {
+                        CarId = result.Data.Id,
+                        ImageData = memoryStream.ToArray()
+                    });
+                }
+            }
+
+            var result2 = _carDetailImageService.Add(carDetailImages.ToArray());
 
             carImage.ImageName = Guid.NewGuid().ToString();
             carImage.Date = DateTime.Now;
             carImage.ImagePath = carImage.ImageName + ".png";
 
             var result1 = _carImageService.Add(carImage);
-            if (result.Success == true)
+            if (result.Success & result1.Success & result.Success == true)
             {
-                //if (carImage.ImageData.Length > 0)
-                //{
-                //    var imagePath = Path.Combine(Directory.GetCurrentDirectory(), @"images/" + carImage.ImageName + ".png");
-                //    var filePath = Path.Combine(Directory.GetCurrentDirectory(), @"images/");
-
-                //    if (!Directory.Exists(filePath))
-                //    {
-                //        Directory.CreateDirectory(filePath);
-                //    }
-
-                //    // Save the image to a file
-                //    System.IO.File.WriteAllBytes(imagePath, carImage.ImageData);
-                //}
                 return Ok(result1);
             }
 

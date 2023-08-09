@@ -34,8 +34,7 @@ namespace DataAccess.Concrete.EntityFramework
         public DbSet<Favorite> Favorites { get; set; }
         public DbSet<Findeks> Findeks { get; set; }
         public DbSet<CarFindeks> CarFindeks { get; set; }
-
-
+        public DbSet<CarDetailImage> CarDetailImages { get; set; }
 
     }
 }

@@ -46,6 +46,8 @@ namespace DataAccess.Concrete.EntityFramework
                         on c.ColorId equals clr.ColorId
                     join b in context.Brands
                         on c.BrandId equals b.BrandId
+                    join img in context.CarImages
+                        on c.Id equals img.CarId
                     select new CarDetailDto { 
                         CarId = c.Id,
                         BrandName = b.BrandName, 
@@ -53,8 +55,8 @@ namespace DataAccess.Concrete.EntityFramework
                         CarName = c.CarName, 
                         DailyPrice = c.DailyPrice,
                         Description = c.Description,
-                        FindeksPoint = c.FindeksPoint
-                       
+                        FindeksPoint = c.FindeksPoint,
+                        ImageData = img.ImageData
                     };
 
                 return result.SingleOrDefault();

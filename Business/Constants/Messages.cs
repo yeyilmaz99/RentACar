@@ -30,5 +30,6 @@ namespace Business.Constants
         public static string CarIsAlreadyAddedToFavorites = "Car is already added to favorites";
         public static string FPIsSufficient = "FP is Sufficient";
         public static string FPIsNotSufficient = "FP is not Sufficient";
+        public static string NumberOfImagesExceeded = "Number of images exceeded";
     }
 }
