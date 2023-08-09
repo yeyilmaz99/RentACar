@@ -1,10 +1,13 @@
 ﻿using Business.Abstract;
+using Business.Constants;
+using Core.Utilities.Results.Abstract;
 using Core.Utilities.Results.Concrete;
 using Entities.Concrete;
 using Entities.DTOs;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Web;
 
@@ -58,6 +61,7 @@ namespace WebAPI.Controllers
 
             return BadRequest(result);
         }
+
 
         [HttpGet("getall")]
         public IActionResult GetByCarId(int carId)
