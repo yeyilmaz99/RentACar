@@ -33,7 +33,7 @@ namespace WebAPI.Controllers
             using (var memoryStream = new MemoryStream())
             {
                 imageDto.Image.CopyTo(memoryStream);
-                carImage.ImageData = memoryStream.ToArray(); // Convert IFormFile to byte array
+                carImage.ImageData = memoryStream.ToArray();
             }
 
             carImage.ImageName = Guid.NewGuid().ToString();

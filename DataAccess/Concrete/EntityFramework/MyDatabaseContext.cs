@@ -16,7 +16,7 @@ namespace DataAccess.Concrete.EntityFramework
             //optionsBuilder.UseSqlServer(@"Server=(localdb)\MSSQLLocalDB;Database=MyDatabase;Trusted_Connection=true");
             //optionsBuilder.UseNpgsql("Host=localhost;Database=MyDatabase;Username=yunus;");
             //optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=mydatabase;Username=yunus;Password=123456;");
-            optionsBuilder.UseNpgsql("Host = localhost; Database = postgres; Username = postgres;Password=123456;");
+            optionsBuilder.UseNpgsql("Host = localhost; Database = MyDatabase; Username = yunus;Password=123456;");
 
         }
 
@@ -35,6 +35,7 @@ namespace DataAccess.Concrete.EntityFramework
         public DbSet<Findeks> Findeks { get; set; }
         public DbSet<CarFindeks> CarFindeks { get; set; }
         public DbSet<CarDetailImage> CarDetailImages { get; set; }
+        public DbSet<BrandImage> BrandImages { get; set; }
 
     }
 }

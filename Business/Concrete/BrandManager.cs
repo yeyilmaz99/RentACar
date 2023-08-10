@@ -7,6 +7,7 @@ using Core.Utilities.Results.Abstract;
 using Core.Utilities.Results.Concrete;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,6 +33,16 @@ namespace Business.Concrete
             return new SuccessResult(Messages.Added);
         }
 
+        public IDataResult<Brand> AddBrand(BrandAndImageDto brandAndImageDto)
+        {
+            Brand brand = new Brand();
+            brand.BrandName = brandAndImageDto.BrandName;
+
+
+            _brandDal.Add(brand);
+            return new SuccessDataResult<Brand>(brand);
+        }
+
         public IResult Delete(Brand brand)
         {
             if(DateTime.Now.Hour == 21)
@@ -45,6 +56,12 @@ namespace Business.Concrete
         public IDataResult<List<Brand>> GetAll()
         {
             return new SuccessDataResult<List<Brand>>(_brandDal.GetAll(),Messages.Listed);
+        }
+
+        public IDataResult<List<BrandDetailDto>> GetBrandDetails()
+        {
+            var result = _brandDal.GetBrandsDetails();
+            return new SuccessDataResult<List<BrandDetailDto>>(result);
         }
 
         public IDataResult<Brand> GetById(int id)

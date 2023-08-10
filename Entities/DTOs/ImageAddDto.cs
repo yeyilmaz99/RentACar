@@ -10,6 +10,6 @@ namespace Entities.DTOs
     public class ImageAddDto
     {
         public int CarId { get; set; }
-        public IFormFile Image { get; set; } // Use IFormFile for image data
+        public IFormFile Image { get; set; }
     }
 }

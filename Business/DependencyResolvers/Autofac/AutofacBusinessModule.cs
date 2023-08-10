@@ -47,6 +47,11 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<EfCarDetailImagesDal>().As<ICarDetailImageDal>().SingleInstance();
 
 
+            builder.RegisterType<BrandImageManager>().As<IBrandImageService>().SingleInstance();
+            builder.RegisterType<EfBrandImageDal>().As<IBrandImageDal>().SingleInstance();
+           
+
+
             builder.RegisterType<PaymentManager>().As<IPaymentService>().SingleInstance();
             builder.RegisterType<EfPaymentDal>().As<IPaymentDal>().SingleInstance();
 

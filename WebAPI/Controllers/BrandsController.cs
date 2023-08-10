@@ -1,5 +1,8 @@
-﻿using Business.Abstract;
+﻿using System;
+using System.IO;
+using Business.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,10 +13,12 @@ namespace WebAPI.Controllers
     public class BrandsController : ControllerBase
     {
         IBrandService _brandService;
+        IBrandImageService _brandImageService;
 
-        public BrandsController(IBrandService brandService)
+        public BrandsController(IBrandService brandService, IBrandImageService brandImageService)
         {
             _brandService = brandService;
+            _brandImageService = brandImageService;
         }
 
         [HttpGet("getall")]
@@ -39,12 +44,28 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("add")]
-        public IActionResult Add(Brand brand)
+        public IActionResult Add([FromForm]BrandAndImageDto brandAndImageDto)
         {
-            var result = _brandService.Add(brand);
-            if (result.Success == true)
+            var result = _brandService.AddBrand(brandAndImageDto);
+
+            BrandImage brandImage = new BrandImage();
+            brandImage.BrandId = result.Data.BrandId;
+
+            using (var memoryStream = new MemoryStream())
             {
-                return Ok(result);
+                brandAndImageDto.ImageData.CopyTo(memoryStream);
+                brandImage.ImageData = memoryStream.ToArray();
+            }
+
+            brandImage.ImageName = Guid.NewGuid().ToString();
+            brandImage.Date = DateTime.Now;
+            brandImage.ImagePath = brandImage.ImageName + ".png";
+
+            var result2 = _brandImageService.Add(brandImage);
+
+            if (result.Success & result2.Success == true)
+            {
+                return Ok(result2);
             }
             return BadRequest(result);
         }
@@ -70,6 +91,17 @@ namespace WebAPI.Controllers
                 return Ok(result);
             }
 
+            return BadRequest(result);
+        }
+
+        [HttpGet("getdetail")]
+        public IActionResult GetAllBrandsDetails()
+        {
+            var result = _brandService.GetBrandDetails();
+            if (result.Success == true)
+            {
+                return Ok(result);
+            }
             return BadRequest(result);
         }
 
