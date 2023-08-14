@@ -21,7 +21,6 @@ namespace Business.Concrete
 
         public IResult Add(BrandImage brandImage)
         {
-
             var result = _brandImageDal.Get(img => img.BrandId == brandImage.BrandId);
             if(result != null)
             {
