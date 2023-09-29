@@ -14,6 +14,9 @@ namespace DataAccess.Concrete.EntityFramework
 {
     public class EfBrandDal : EfEntityRepositoryBase<Brand, MyDatabaseContext>,IBrandDal
     {
+        public EfBrandDal(DbContextOptions<MyDatabaseContext> dbContextOptions) : base(dbContextOptions)
+        {
+        }
 
         public List<BrandDetailDto> GetBrandsDetails(Expression<Func<Brand, bool>> filter = null)
         {

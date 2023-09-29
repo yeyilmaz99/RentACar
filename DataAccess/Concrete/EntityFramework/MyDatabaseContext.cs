@@ -11,14 +11,23 @@ namespace DataAccess.Concrete.EntityFramework
 {
     public class MyDatabaseContext:DbContext
     {
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        public MyDatabaseContext()
         {
-            //optionsBuilder.UseSqlServer(@"Server=(localdb)\MSSQLLocalDB;Database=MyDatabase;Trusted_Connection=true");
-            //optionsBuilder.UseNpgsql("Host=localhost;Database=MyDatabase;Username=yunus;");
-            //optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=mydatabase;Username=yunus;Password=123456;");
-            optionsBuilder.UseNpgsql("Host = localhost; Database = MyDatabase; Username = yunus;Password=123456;");
-
         }
+        public MyDatabaseContext(DbContextOptions<MyDatabaseContext> options):base(options)
+        {
+        }
+
+
+
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    //optionsBuilder.UseSqlServer(@"Server=(localdb)\MSSQLLocalDB;Database=MyDatabase;Trusted_Connection=true");
+        //    //optionsBuilder.UseNpgsql("Host=localhost;Database=MyDatabase;Username=yunus;");
+        //    //optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=mydatabase;Username=yunus;Password=123456;");
+        //    optionsBuilder.UseNpgsql("Host = localhost; Database = mydatabase; Username = yunus;Password=123456;");
+
+        //}
 
 
         public DbSet<Car> Cars{ get; set; }

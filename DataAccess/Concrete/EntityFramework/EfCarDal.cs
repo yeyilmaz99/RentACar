@@ -14,6 +14,10 @@ namespace DataAccess.Concrete.EntityFramework
 {
     public class EfCarDal : EfEntityRepositoryBase<Car, MyDatabaseContext>, ICarDal
     {
+        public EfCarDal(DbContextOptions<MyDatabaseContext> dbContextOptions) : base(dbContextOptions)
+        {
+        }
+
         public List<CarDetailDto> GetCarsDetails(Expression<Func<Car, bool>> filter = null)
         {
             using (MyDatabaseContext context = new MyDatabaseContext())

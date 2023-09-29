@@ -6,10 +6,14 @@ using System.Threading.Tasks;
 using Core.DataAccess.EntityFramework;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess.Concrete.EntityFramework
 {
     public class EfPaymentDal : EfEntityRepositoryBase<Payment, MyDatabaseContext>, IPaymentDal
     {
+        public EfPaymentDal(DbContextOptions<MyDatabaseContext> dbContextOptions) : base(dbContextOptions)
+        {
+        }
     }
 }

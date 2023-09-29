@@ -23,6 +23,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Http;
 using Microsoft.IdentityModel.Tokens;
 using Core.Extensions;
+using Microsoft.EntityFrameworkCore;
 
 namespace WebAPI
 {
@@ -38,7 +39,10 @@ namespace WebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.AddDbContext<MyDatabaseContext>(options =>
+            {
+                options.UseNpgsql(Configuration.GetConnectionString("MyDbConnection"));
+            });
             services.AddControllers();
 
             services.AddCors();

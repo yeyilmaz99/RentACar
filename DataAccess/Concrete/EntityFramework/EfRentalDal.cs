@@ -8,11 +8,16 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using Entities.DTOs;
+using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess.Concrete.EntityFramework
 {
     public class EfRentalDal : EfEntityRepositoryBase<Rental, MyDatabaseContext>, IRentalDal
     {
+        public EfRentalDal(DbContextOptions<MyDatabaseContext> dbContextOptions) : base(dbContextOptions)
+        {
+        }
+
         public List<RentalDetailDto> GetRentalDetails(Expression<Func<Rental, bool>> filter = null)
         {
             using (MyDatabaseContext context = new MyDatabaseContext())
