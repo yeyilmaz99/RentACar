@@ -9,18 +9,21 @@ using System.Text;
 using System.Threading.Tasks;
 using Entities.DTOs;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace DataAccess.Concrete.EntityFramework
 {
     public class EfRentalDal : EfEntityRepositoryBase<Rental, MyDatabaseContext>, IRentalDal
     {
+        private readonly DbContextOptions<MyDatabaseContext> _dbContextOptions;
         public EfRentalDal(DbContextOptions<MyDatabaseContext> dbContextOptions) : base(dbContextOptions)
         {
+            _dbContextOptions = dbContextOptions;
         }
 
         public List<RentalDetailDto> GetRentalDetails(Expression<Func<Rental, bool>> filter = null)
         {
-            using (MyDatabaseContext context = new MyDatabaseContext())
+            using (MyDatabaseContext context = new MyDatabaseContext(_dbContextOptions))
             {
                 var result = from r in filter == null ? context.Rentals : context.Rentals.Where(filter)
                              join c in context.Cars on r.CarId equals c.Id

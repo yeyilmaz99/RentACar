@@ -14,13 +14,15 @@ namespace DataAccess.Concrete.EntityFramework
 {
     public class EfFavoriteDal : EfEntityRepositoryBase<Favorite, MyDatabaseContext>, IFavoriteDal
     {
+        private readonly DbContextOptions<MyDatabaseContext> _dbContextOptions;
         public EfFavoriteDal(DbContextOptions<MyDatabaseContext> dbContextOptions) : base(dbContextOptions)
         {
+            _dbContextOptions = dbContextOptions;
         }
 
         public List<UserFavoriteDto> GetFavoritesDetails(Expression<Func<Favorite, bool>> filter)
         {
-            using (MyDatabaseContext context = new MyDatabaseContext())
+            using (MyDatabaseContext context = new MyDatabaseContext(_dbContextOptions))
             {
                 var result = from fav in filter == null ? context.Favorites : context.Favorites.Where(filter)
                     join c in context.Cars on fav.CarId equals c.Id

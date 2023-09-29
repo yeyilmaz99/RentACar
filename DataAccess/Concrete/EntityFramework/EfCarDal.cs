@@ -14,13 +14,16 @@ namespace DataAccess.Concrete.EntityFramework
 {
     public class EfCarDal : EfEntityRepositoryBase<Car, MyDatabaseContext>, ICarDal
     {
+        private readonly DbContextOptions<MyDatabaseContext> _dbContextOptions;
+
         public EfCarDal(DbContextOptions<MyDatabaseContext> dbContextOptions) : base(dbContextOptions)
         {
+            _dbContextOptions = dbContextOptions;
         }
 
         public List<CarDetailDto> GetCarsDetails(Expression<Func<Car, bool>> filter = null)
         {
-            using (MyDatabaseContext context = new MyDatabaseContext())
+            using (MyDatabaseContext context = new MyDatabaseContext(_dbContextOptions))
             {
                 var result = from c in filter == null ? context.Cars : context.Cars.Where(filter)
                              join b in context.Brands on c.BrandId equals b.BrandId
@@ -43,7 +46,7 @@ namespace DataAccess.Concrete.EntityFramework
 
         public CarDetailDto GetCarDetail(Expression<Func<Car, bool>> filter)
         {
-            using (var context = new MyDatabaseContext())
+            using (var context = new MyDatabaseContext(_dbContextOptions))
             {
                 var result = from c in context.Cars.Where(filter)
                     join clr in context.Colors
@@ -69,7 +72,7 @@ namespace DataAccess.Concrete.EntityFramework
 
         public List<CarDetailDto> GetCarsByBrandIdAndColorId(int colorId, int brandId)
         {
-            using (MyDatabaseContext context = new MyDatabaseContext())
+            using (MyDatabaseContext context = new MyDatabaseContext(_dbContextOptions))
             {
                 var result = from c in context.Cars
                     join b in context.Brands.Where(b => b.BrandId ==  brandId ) on c.BrandId equals b.BrandId

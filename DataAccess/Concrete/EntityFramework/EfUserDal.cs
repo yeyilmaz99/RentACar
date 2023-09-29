@@ -15,13 +15,15 @@ namespace DataAccess.Concrete.EntityFramework
 {
     public class EfUserDal : EfEntityRepositoryBase<User, MyDatabaseContext>, IUserDal
     {
+        private readonly DbContextOptions<MyDatabaseContext> _dbContextOptions;
         public EfUserDal(DbContextOptions<MyDatabaseContext> dbContextOptions) : base(dbContextOptions)
         {
+            _dbContextOptions = dbContextOptions;
         }
 
         public List<OperationClaim> GetClaims(User user)
         {
-            using (var context = new MyDatabaseContext())
+            using (var context = new MyDatabaseContext(_dbContextOptions))
             {
                 var result = from operationClaim in context.OperationClaims
                     join userOperationClaim in context.UserOperationClaims
@@ -35,7 +37,7 @@ namespace DataAccess.Concrete.EntityFramework
 
         public List<UserDetailDto> GetUserDetails()
         {
-            using (var context = new MyDatabaseContext())
+            using (var context = new MyDatabaseContext(_dbContextOptions))
             {
                 var result = from u in context.Users
                              join f in context.Findeks

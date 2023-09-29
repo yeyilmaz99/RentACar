@@ -14,13 +14,15 @@ namespace DataAccess.Concrete.EntityFramework
 {
     public class EfBrandDal : EfEntityRepositoryBase<Brand, MyDatabaseContext>,IBrandDal
     {
+        private readonly DbContextOptions<MyDatabaseContext> _dbContextOptions;
         public EfBrandDal(DbContextOptions<MyDatabaseContext> dbContextOptions) : base(dbContextOptions)
         {
+            _dbContextOptions = dbContextOptions;
         }
 
         public List<BrandDetailDto> GetBrandsDetails(Expression<Func<Brand, bool>> filter = null)
         {
-            using (var context = new MyDatabaseContext())
+            using (var context = new MyDatabaseContext(_dbContextOptions))
             {
                 var result = from b in filter == null ? context.Brands : context.Brands.Where(filter)
                              join img in context.BrandImages
