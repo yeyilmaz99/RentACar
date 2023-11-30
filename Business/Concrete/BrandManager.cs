@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Validation;
@@ -33,6 +34,9 @@ namespace Business.Concrete
             return new SuccessResult(Messages.Added);
         }
 
+
+        [SecuredOperation("admin")]
+        [ValidationAspect(typeof(BrandValidator))]
         public IDataResult<Brand> AddBrand(BrandAndImageDto brandAndImageDto)
         {
             Brand brand = new Brand();
@@ -43,6 +47,7 @@ namespace Business.Concrete
             return new SuccessDataResult<Brand>(brand);
         }
 
+        [SecuredOperation("admin")]
         public IResult Delete(Brand brand)
         {
             if(DateTime.Now.Hour == 21)
@@ -69,6 +74,8 @@ namespace Business.Concrete
             return new SuccessDataResult<Brand>(_brandDal.Get(b => b.BrandId == id));
         }
 
+        [SecuredOperation("admin")]
+        [ValidationAspect(typeof(BrandValidator))]
         public IResult Update(Brand brand)
         {
             if (DateTime.Now.Hour == 22)
