@@ -1,5 +1,6 @@
 ﻿using System;
 using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Business.Constants;
 using Core.Utilities.Results.Abstract;
 using Core.Utilities.Results.Concrete;
@@ -18,7 +19,7 @@ namespace Business.Concrete
         {
             _brandImageDal = brandImageDal;
         }
-
+        [SecuredOperation("admin")]
         public IResult Add(BrandImage brandImage)
         {
             var result = _brandImageDal.Get(img => img.BrandId == brandImage.BrandId);
