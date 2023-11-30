@@ -12,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Business.Constants;
+using Business.BusinessAspects.Autofac;
 
 namespace Business.Concrete
 {
@@ -24,7 +25,7 @@ namespace Business.Concrete
         {
             _carImageDal = carImageDal;
         }
-
+        [SecuredOperation("admin")]
         public IResult Add(CarImage carImage)
         {
             IResult result = BusinessRules.Run(CheckIfCarImagesFull(carImage.CarId));
@@ -37,7 +38,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.Added);
 
         }
-
+        [SecuredOperation("admin")]
         public IResult Delete(CarImage carImage)
         {
             throw new NotImplementedException();
@@ -60,7 +61,7 @@ namespace Business.Concrete
         }
 
 
-
+        [SecuredOperation("admin")]
         public IResult Update(CarImage carImage)
         {
             throw new NotImplementedException();
