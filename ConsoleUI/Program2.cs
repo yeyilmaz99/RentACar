@@ -1,47 +1,27 @@
-﻿using Business.Abstract;
-using Entities.Concrete;
+﻿using Iyzipay;
 using Iyzipay.Model;
 using Iyzipay.Request;
-using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using NUnit.Framework;
 using Newtonsoft.Json.Serialization;
 using Newtonsoft.Json;
+using NUnit.Framework;
+using System;
+using System.Collections.Generic;
 using System.Diagnostics;
-using Iyzipay;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace WebAPI.Controllers
+namespace ConsoleUI
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class PaymentController : ControllerBase
+    internal class Program2
     {
-        IPaymentService _paymentService;
-
-        public PaymentController(IPaymentService paymentService)
-        {
-            _paymentService = paymentService;
-        }
-
-
-        [HttpPost("add")]
-        public IActionResult Add(Entities.Concrete.Payment payment)
-        {
-            var result = _paymentService.Add(payment);
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result);
-        }
-        [HttpPost("initializeCheckoutForm")]
-        public IActionResult InitializeCheckoutForm()
+        static void Main(string[] args)
         {
             Options options = new Options
             {
                 ApiKey = "sandbox-5qWbldcKyN6tQHY6mauKzPh4JtOjFzrT",
                 SecretKey = "sandbox-FnsVgbFrYFy8Rmtv5fjDJ1dGoQHQxLF2",
-                BaseUrl = "https://sandbox-api.iyzipay.com"
+                BaseUrl = "https://sandbox-api.iyzipay.com" 
             };
 
             void PrintResponse<T>(T resource)
@@ -147,24 +127,6 @@ namespace WebAPI.Controllers
             Assert.IsNotNull(checkoutFormInitialize.CheckoutFormContent);
             Assert.IsNotNull(checkoutFormInitialize.PaymentPageUrl);
 
-            return Ok(checkoutFormInitialize);
         }
-
-
-
     }
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
