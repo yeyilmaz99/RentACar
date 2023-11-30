@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Business.Constants;
 using Core.Utilities.Business;
 using Core.Utilities.Results.Abstract;
@@ -19,7 +20,7 @@ namespace Business.Concrete
         {
             _carDetailImageDal = carImageDetailDal;
         }
-
+        [SecuredOperation("admin")]
         public IResult Add(CarDetailImage[] carDetailImages)
         {
 
@@ -43,7 +44,7 @@ namespace Business.Concrete
             }
             return new SuccessResult(Messages.Added);
         }
-
+        [SecuredOperation("admin")]
         public IResult Delete(List<byte[]> carImages)
         {
             throw new NotImplementedException();
@@ -60,7 +61,7 @@ namespace Business.Concrete
             return new SuccessDataResult<List<CarDetailImage>>(_carDetailImageDal.GetAll(c => c.CarId == carId));
 
         }
-
+        [SecuredOperation("admin")]
         public IResult Update(List<byte[]> carImages)
         {
             throw new NotImplementedException();
