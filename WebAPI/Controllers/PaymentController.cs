@@ -71,7 +71,10 @@ namespace WebAPI.Controllers
             request.Currency = Currency.USD.ToString();
             request.BasketId = "B67832";
             request.PaymentGroup = PaymentGroup.PRODUCT.ToString();
-            request.CallbackUrl = "https://localhost:5001/api/Payment/retrievePaymentResult";
+
+
+            request.CallbackUrl = "https://apiv2.rentacar.yeyilmaz.online/api/Payment/retrievePaymentResult";
+            //request.CallbackUrl = "https://localhost:5001/api/Payment/retrievePaymentResult";
 
             List<int> enabledInstallments = new List<int>();
             enabledInstallments.Add(2);
