@@ -9,6 +9,12 @@ using Newtonsoft.Json.Serialization;
 using Newtonsoft.Json;
 using System.Diagnostics;
 using Iyzipay;
+using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.SignalR;
+using WebAPI.Hubs;
+using System.Threading.Tasks;
+using System;
 
 namespace WebAPI.Controllers
 {
@@ -17,12 +23,19 @@ namespace WebAPI.Controllers
     public class PaymentController : ControllerBase
     {
         IPaymentService _paymentService;
+        private readonly IHubContext<PayHub> _hubContext;
 
-        public PaymentController(IPaymentService paymentService)
+        public PaymentController(IPaymentService paymentService, IHubContext<PayHub> hubContext)
         {
             _paymentService = paymentService;
+            _hubContext = hubContext;
         }
-
+        Iyzipay.Options options = new Iyzipay.Options
+        {
+            ApiKey = "sandbox-5qWbldcKyN6tQHY6mauKzPh4JtOjFzrT",
+            SecretKey = "sandbox-FnsVgbFrYFy8Rmtv5fjDJ1dGoQHQxLF2",
+            BaseUrl = "https://sandbox-api.iyzipay.com"
+        };
 
         [HttpPost("add")]
         public IActionResult Add(Entities.Concrete.Payment payment)
@@ -35,14 +48,9 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
         [HttpPost("initializeCheckoutForm")]
-        public IActionResult InitializeCheckoutForm()
+        public IActionResult InitializeCheckoutForm([FromBody] string price)
         {
-            Options options = new Options
-            {
-                ApiKey = "sandbox-5qWbldcKyN6tQHY6mauKzPh4JtOjFzrT",
-                SecretKey = "sandbox-FnsVgbFrYFy8Rmtv5fjDJ1dGoQHQxLF2",
-                BaseUrl = "https://sandbox-api.iyzipay.com"
-            };
+
 
             void PrintResponse<T>(T resource)
             {
@@ -56,14 +64,14 @@ namespace WebAPI.Controllers
             }
 
             CreateCheckoutFormInitializeRequest request = new CreateCheckoutFormInitializeRequest();
-            request.Locale = Locale.TR.ToString();
-            request.ConversationId = "123456789";
+            request.Locale = Locale.EN.ToString();
+            request.ConversationId = Guid.NewGuid().ToString();
             request.Price = "1";
-            request.PaidPrice = "1.2";
-            request.Currency = Currency.TRY.ToString();
+            request.PaidPrice = price;
+            request.Currency = Currency.USD.ToString();
             request.BasketId = "B67832";
             request.PaymentGroup = PaymentGroup.PRODUCT.ToString();
-            request.CallbackUrl = "https://www.merchant.com/callback";
+            request.CallbackUrl = "https://localhost:5001/api/Payment/retrievePaymentResult";
 
             List<int> enabledInstallments = new List<int>();
             enabledInstallments.Add(2);
@@ -134,23 +142,30 @@ namespace WebAPI.Controllers
             request.BasketItems = basketItems;
 
             CheckoutFormInitialize checkoutFormInitialize = CheckoutFormInitialize.Create(request, options);
-
-            PrintResponse<CheckoutFormInitialize>(checkoutFormInitialize);
-
-            Assert.AreEqual(Status.SUCCESS.ToString(), checkoutFormInitialize.Status);
-            Assert.AreEqual(Locale.TR.ToString(), checkoutFormInitialize.Locale);
-            Assert.AreEqual("123456789", checkoutFormInitialize.ConversationId);
-            Assert.IsNotNull(checkoutFormInitialize.SystemTime);
-            Assert.IsNull(checkoutFormInitialize.ErrorCode);
-            Assert.IsNull(checkoutFormInitialize.ErrorMessage);
-            Assert.IsNull(checkoutFormInitialize.ErrorGroup);
-            Assert.IsNotNull(checkoutFormInitialize.CheckoutFormContent);
-            Assert.IsNotNull(checkoutFormInitialize.PaymentPageUrl);
-
+           
+            
             return Ok(checkoutFormInitialize);
         }
 
 
+        [HttpPost("retrievePaymentResult")]
+        public async  Task<IActionResult> RetrievePaymentResult([FromForm] IFormCollection collections)
+        {
+            RetrieveCheckoutFormRequest request = new RetrieveCheckoutFormRequest();
+            request.Token = collections["Token"];
+
+            CheckoutForm checkoutForm = CheckoutForm.Retrieve(request, options);
+
+            if (checkoutForm.Status != "success")
+            {
+                return BadRequest("Payment is not successful");
+            }
+            
+            await _hubContext.Clients.Client(PayHub.TransactionConnections[request.Token]).SendAsync("Receive", checkoutForm);
+
+            return Ok();
+            
+        }
 
     }
 

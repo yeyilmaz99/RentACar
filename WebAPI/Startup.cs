@@ -24,6 +24,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.IdentityModel.Tokens;
 using Core.Extensions;
 using Microsoft.EntityFrameworkCore;
+using WebAPI.Hubs;
+using Microsoft.AspNetCore.SignalR;
+
+
+
 
 namespace WebAPI
 {
@@ -46,6 +51,8 @@ namespace WebAPI
             services.AddControllers();
 
             services.AddCors();
+
+            services.AddSignalR();
 
 
             var tokenOptions = Configuration.GetSection("TokenOptions").Get<TokenOptions>();
@@ -112,7 +119,7 @@ namespace WebAPI
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "WebAPI v1"));
             }
 
-            app.UseCors(builder => builder.WithOrigins("https://rentacar.yeyilmaz.online","http://localhost:4200").AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
+            app.UseCors(builder => builder.WithOrigins("https://rentacar.yeyilmaz.online", "http://localhost:4200").AllowAnyHeader().AllowCredentials().AllowAnyMethod().SetIsOriginAllowed(policy => true));
 
             if (!env.IsDevelopment())
             {
@@ -130,6 +137,7 @@ namespace WebAPI
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<PayHub>("/pay-hub");
             });
         }
     }
