@@ -35,14 +35,12 @@ namespace Business.Concrete
         }
 
 
-        [SecuredOperation("admin")]
-        [ValidationAspect(typeof(BrandValidator))]
+        //[SecuredOperation("admin")]
+        //[ValidationAspect(typeof(BrandValidator))]
         public IDataResult<Brand> AddBrand(BrandAndImageDto brandAndImageDto)
         {
             Brand brand = new Brand();
             brand.BrandName = brandAndImageDto.BrandName;
-
-
             _brandDal.Add(brand);
             return new SuccessDataResult<Brand>(brand);
         }
